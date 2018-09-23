@@ -64,20 +64,9 @@ public class UDPTest {
     @After
     public void tearDown() {
         try {
-            ((Runnable) () -> {
-                try {
-                    client.sendEcho("end");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).run();
-            ((Runnable) () -> {
-                try {
-                    client2.sendEcho("end");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).run();
+            // TODO рпазобраться почему тут зависаем
+            client.sendEcho("end");
+            client2.sendEcho("end");
             client.close();
             client2.close();
         } catch (Exception e) {
