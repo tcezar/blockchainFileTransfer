@@ -21,6 +21,7 @@ public class BroadcastingEchoServer extends Thread {
         socket = new DatagramSocket(null);
         socket.setReuseAddress(true);
         socket.bind(new InetSocketAddress(4445));
+        System.out.println(anInt);
     }
 
     public static void main(String[] args) throws IOException {
@@ -29,14 +30,13 @@ public class BroadcastingEchoServer extends Thread {
     }
     public void run() {
         running = true;
-
         while (running) {
             try {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
                 socket.receive(packet);
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
-                packet = new DatagramPacket(buf, buf.length, address, port);
+                //packet = new DatagramPacket(new byte[1024], 1024, address, port);
                 String received = new String(packet.getData(), 0, packet.getLength());
                 System.out.println(new Date() + ". received = " + received);
                 if (received.equals("end")) {

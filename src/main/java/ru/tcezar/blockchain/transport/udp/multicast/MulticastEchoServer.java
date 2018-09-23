@@ -36,7 +36,7 @@ public class MulticastEchoServer extends Thread {
     public void run() {
         try {
             while (true) {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
                 socket.receive(packet);
                 InetAddress address = packet.getAddress();
                 int port = packet.getPort();
