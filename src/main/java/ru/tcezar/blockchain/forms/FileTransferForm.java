@@ -1,12 +1,22 @@
 package ru.tcezar.blockchain.forms;
 
+import ru.tcezar.blockchain.BlockChain;
+import ru.tcezar.blockchain.Transport;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.util.Map;
+import java.util.Set;
 
 public class FileTransferForm extends JFrame {
+    private static Transport transport;
+    private static BlockChain blockChain;
+
     public FileTransferForm() throws HeadlessException {
         super("BlockChainFileTransfer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,6 +25,10 @@ public class FileTransferForm extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         panel.add(Box.createVerticalGlue());
+
+//        final JLabel labelServer = new JLabel(getTransport().toString());
+//        labelServer.setAlignmentX(CENTER_ALIGNMENT);
+//        panel.add(labelServer);
 
         final JLabel labelFile = new JLabel("Выбранный файл");
         labelFile.setAlignmentX(CENTER_ALIGNMENT);
@@ -46,19 +60,27 @@ public class FileTransferForm extends JFrame {
 
         panel.add(buttonChoseFile);
 
-        JButton buttonChoiseRecipient=new JButton("Выбрать получателя");
+        JButton buttonChoiseRecipient = new JButton("Выбрать получателя");
         buttonChoiseRecipient.setAlignmentX(CENTER_ALIGNMENT);
 
         buttonChoiseRecipient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                labelRecipient.setText("Получатель плохой");
+                Map<InetAddress, Set<Integer>> recipientList = getTransport().getRecipientList();
+                if (recipientList.isEmpty()) {
+                    getTransport().scanRecipient();
+                }
+                if (recipientList.isEmpty()) {
+                    labelRecipient.setText("Получатель плохой");
+                } else {
+                    // TODO вывести список получателей с возможностью выбрать одного
+                }
             }
         });
 
         panel.add(buttonChoiseRecipient);
 
-        JButton buttonSendFile=new JButton("Отправить файл получателю");
+        JButton buttonSendFile = new JButton("Отправить файл получателю");
         buttonSendFile.setAlignmentX(CENTER_ALIGNMENT);
 
         buttonSendFile.addActionListener(new ActionListener() {
@@ -87,5 +109,21 @@ public class FileTransferForm extends JFrame {
                 new FileTransferForm();
             }
         });
+    }
+
+    public static Transport getTransport() {
+        return transport;
+    }
+
+    public static void setTransport(Transport transport) {
+        if (FileTransferForm.transport == null) {
+            FileTransferForm.transport = transport;
+        } else {
+            throw new RuntimeException("Transport has inited");
+        }
+    }
+
+    public static void setBlockChain(BlockChain blockChain) {
+        FileTransferForm.blockChain = blockChain;
     }
 }

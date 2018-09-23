@@ -5,11 +5,12 @@ import java.util.List;
 
 public class BlockChain {
     private List<Block> blockchain;
-    private Transport transport = new Transport(5700,5800);
+    private Transport transport;
 
-    public BlockChain() {
+    public BlockChain(Transport transport) {
         this.blockchain = new ArrayList<>();
         blockchain.add(getGenesisBlock());
+        this.transport=transport;
     }
 
     public List<Block> getBlockchain() {
