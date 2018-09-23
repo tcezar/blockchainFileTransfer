@@ -7,9 +7,12 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.tcezar.blockchain.transport.udp.DatagramPacketUtils.getData;
 
 public class BroadcastingClient {
     private DatagramSocket socket;
@@ -63,6 +66,7 @@ public class BroadcastingClient {
     private void broadcastPacket(InetAddress address) throws IOException {
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 4445);
         socket.send(packet);
+        System.out.println(new Date() + ". send = " + getData(packet));
     }
 
     private int receivePackets() throws IOException {
@@ -75,11 +79,17 @@ public class BroadcastingClient {
     }
 
     private void receivePacket() throws IOException {
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
         socket.receive(packet);
+        System.out.println(new Date() + ". received = " + getData(packet) + " from " + packet.getSocketAddress());
     }
 
     public void close() {
         socket.close();
+    }
+
+    public static void main(String[] args) throws Exception {
+        BroadcastingClient client = new BroadcastingClient(2);
+        client.discoverServers("hello");
     }
 }
