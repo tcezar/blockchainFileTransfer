@@ -14,10 +14,14 @@ public class MulticastingClient {
     private int expectedServerCount;
     private byte[] buf;
 
-    public MulticastingClient(int expectedServerCount) throws Exception {
+    public MulticastingClient(String addr, int expectedServerCount) throws Exception {
         this.expectedServerCount = expectedServerCount;
         this.socket = new DatagramSocket();
-        this.group = InetAddress.getByName("230.0.0.0");
+        this.group = InetAddress.getByName(addr);
+    }
+
+    public MulticastingClient(int expectedServerCount) throws Exception {
+        new MulticastEchoServer("230.0.0.0", expectedServerCount);
     }
 
 

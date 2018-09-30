@@ -20,9 +20,13 @@ public class BroadcastingClient {
     private int expectedServerCount;
     private byte[] buf;
 
-    public BroadcastingClient(int expectedServerCount) throws Exception {
+    public BroadcastingClient(String addr, int expectedServerCount) throws Exception {
         this.expectedServerCount = expectedServerCount;
-        this.address = InetAddress.getByName("255.255.255.255");
+        this.address = InetAddress.getByName(addr);
+    }
+
+    public BroadcastingClient(int expectedServerCount) throws Exception {
+        new BroadcastingEchoServer("255.255.255.255", expectedServerCount);
     }
 
     public int discoverServers(String msg) throws IOException {
@@ -46,10 +50,10 @@ public class BroadcastingClient {
             }
 
             broadcastList.addAll(networkInterface.getInterfaceAddresses()
-                .stream()
-                .filter(address -> address.getBroadcast() != null)
-                .map(address -> address.getBroadcast())
-                .collect(Collectors.toList()));
+                    .stream()
+                    .filter(address -> address.getBroadcast() != null)
+                    .map(address -> address.getBroadcast())
+                    .collect(Collectors.toList()));
         }
         return broadcastList;
     }

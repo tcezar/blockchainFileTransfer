@@ -11,13 +11,13 @@ public class EchoServer extends Thread {
     private boolean running;
     private byte[] buf = new byte[256];
 
-    public EchoServer(String addr) throws SocketException, UnknownHostException {
+    public EchoServer(String addr, Integer port) throws SocketException, UnknownHostException {
         address = InetAddress.getByName(addr);
-        socket = new DatagramSocket(4445, address);
+        socket = new DatagramSocket(port, address);
     }
 
     public static void main(String[] args) throws SocketException, UnknownHostException {
-        EchoServer server = new EchoServer("127.0.0.3");
+        EchoServer server = new EchoServer("127.0.0.3", 4445);
         server.start();
     }
     public void run() {

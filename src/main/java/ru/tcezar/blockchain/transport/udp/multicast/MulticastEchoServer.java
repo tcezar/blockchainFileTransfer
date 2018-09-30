@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.Date;
-import java.util.Random;
 
 import static ru.tcezar.blockchain.transport.udp.DatagramPacketUtils.getData;
 
@@ -14,19 +13,20 @@ public class MulticastEchoServer extends Thread {
     protected MulticastSocket socket = null;
     protected byte[] buf = new byte[256];
     protected InetAddress group = null;
-    int anInt = new Random().nextInt();
 
-    public MulticastEchoServer() throws IOException {
-        socket = new MulticastSocket(4446);
+    public MulticastEchoServer(String addr,Integer port) throws IOException {
+        socket = new MulticastSocket(port);
         socket.setReuseAddress(true);
-        group = InetAddress.getByName("230.0.0.0");
+        group = InetAddress.getByName(addr);
         socket.joinGroup(group);
+    }
+    public MulticastEchoServer() throws IOException {
+        new MulticastEchoServer("230.0.0.0",4446);
     }
 
     public static void main(String[] args) {
         try {
             MulticastEchoServer multicastEchoServer = new MulticastEchoServer();
-            System.out.println("id = " + multicastEchoServer.anInt);
             multicastEchoServer.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class MulticastEchoServer extends Thread {
                 if (received.equals("end")) {
                     break;
                 }
-                buf = (received.toUpperCase() + ". id = " + anInt).getBytes();
+                buf = (received.toUpperCase() + ". hashCode = " + hashCode()).getBytes();
                 packet = new DatagramPacket(buf, buf.length, address, port);
                 System.out.println(new Date() + ". send = " + getData(packet));
                 socket.send(packet);
