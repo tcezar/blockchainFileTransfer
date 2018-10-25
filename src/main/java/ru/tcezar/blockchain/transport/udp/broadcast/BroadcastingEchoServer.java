@@ -26,7 +26,7 @@ public class BroadcastingEchoServer extends Thread {
     }
 
     public static void main(String[] args) throws IOException {
-        BroadcastingEchoServer broadcastingEchoServer = new BroadcastingEchoServer();
+        BroadcastingEchoServer broadcastingEchoServer = new BroadcastingEchoServer(0);
         broadcastingEchoServer.start();
     }
 
