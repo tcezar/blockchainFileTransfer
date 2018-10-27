@@ -7,30 +7,23 @@ import ru.lib.impl.SettingKeeper;
 
 public class SettingKeeperTest {
 
-    private static final String test_filepath1 = "\\src\\test\\resources\\test-config.txt";
-    private static final String test_filepath2 = "\\src\\test\\resources\\bad-test-config.txt";
-    private static final String bad_test_filepath = "\\src\\test\\resources\\unknown.txt";
+    private static final String test_filepath1 = "test-config.properties";
+    private static final String bad_test_filepath = "unknown.properties";
 
     @Test
     public void test1() {
-        ISettingKeeper settingKeeper =  new SettingKeeper(System.getProperty("user.dir") + test_filepath1);
+        ISettingKeeper settingKeeper =  new SettingKeeper(test_filepath1);
         Assert.assertFalse(settingKeeper.getSettings().isEmpty());
     }
 
     @Test
     public void test2() {
-        ISettingKeeper settingKeeper =  new SettingKeeper(System.getProperty("user.dir") + bad_test_filepath);
+        ISettingKeeper settingKeeper =  new SettingKeeper(bad_test_filepath);
         Assert.assertTrue(settingKeeper.getSettings().isEmpty());
     }
 
     @Test
     public void test3() {
-        ISettingKeeper settingKeeper =  new SettingKeeper(System.getProperty("user.dir") + test_filepath2);
-        Assert.assertTrue(settingKeeper.getSettings().isEmpty());
-    }
-
-    @Test
-    public void test4() {
         String code = "test_code";
         String value = "test_value";
 
@@ -40,7 +33,7 @@ public class SettingKeeperTest {
     }
 
     @Test
-    public void test5() {
+    public void test4() {
         Assert.assertNotNull(new SettingKeeper().toString());
     }
 }

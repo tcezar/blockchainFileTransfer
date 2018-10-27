@@ -1,13 +1,13 @@
 package ru.lib.api;
 
-import java.util.Map;
+import java.util.Properties;
 
 public interface ISettingKeeper {
 
-    public String getSetting(String code);
+    public Object getSetting(String code);
 
     public void setSetting(String code, String value);
 
-    public Map<String, String> getSettings();
+    public Properties getSettings();
 
 }
