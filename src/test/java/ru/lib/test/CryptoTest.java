@@ -1,25 +1,45 @@
 package ru.lib.test;
 
 import org.junit.Test;
+import ru.lib.impl.CryptoHelper;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.security.*;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 
 public class CryptoTest {
 
     private static final String testMsg = "Hello. It's test message!";
 
     @Test
-    public void test() throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public void test1() throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
 
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(1024);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         Key publicKey = keyPair.getPublic();
         Key privateKey = keyPair.getPrivate();
+        System.out.println("Start message: " + testMsg);
+
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        byte[] encryptBytes = cipher.doFinal(testMsg.getBytes());
+        System.out.println("EnCrypt message: " + new String(encryptBytes));
+
+        Cipher decryptCipher = Cipher.getInstance("RSA");
+        decryptCipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decryptBytes = decryptCipher.doFinal(encryptBytes);
+        System.out.println("DeCrypt message: " + new String(decryptBytes));
+    }
+
+    @Test
+    public void test2() throws Exception {
+        Cipher cipher = Cipher.getInstance("RSA");
+        CryptoHelper.generateKeys();
+
+        Key publicKey = CryptoHelper.getPublicKeyFromFile(CryptoHelper.publicKeyFilename);
+        Key privateKey = CryptoHelper.getPrivateKeyFromFile(CryptoHelper.privateKeyFilename);
         System.out.println("Start message: " + testMsg);
 
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
