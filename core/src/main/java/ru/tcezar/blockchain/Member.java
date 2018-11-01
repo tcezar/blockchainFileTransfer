@@ -31,7 +31,7 @@ public final class Member implements IMember {
      */
     final private ExecutorService listeners;
     final private ExecutorService singleTasks;
-    private IServerFileTranfer singleFileTransfer;
+    final private ExecutorService singleFileTransfers;
     final private String id;
     final private List<IMember> members;
 
@@ -40,9 +40,18 @@ public final class Member implements IMember {
         keys = criptoUtils.generateKeys();
         blockChain = new BlockChain();
         id = String.valueOf(keys.getPublicKey().getEncoded());
-        listeners = Executors.newFixedThreadPool(2);
+        listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
+        singleFileTransfers = Executors.newSingleThreadExecutor();
         members = new ArrayList<>();
+    }
+
+    public void stopFiletransfer() {
+        singleFileTransfers.shutdown();
+    }
+
+    public void startFileTransfer(IServerFileTranfer singleFileTransfer) {
+        singleFileTransfers.submit(singleFileTransfer);
     }
 
     public List<IMember> getMembers() {
@@ -57,9 +66,15 @@ public final class Member implements IMember {
         listeners.submit(listener);
     }
 
-    public void addListenerNewMembers(IListenerNewMembers listenerNewMembers) {
+    public void addListenerNewMembers(INewMembersListener listenerNewMembers) {
         listenerNewMembers.setMembers(members);
+        listenerNewMembers.setBlockChain(blockChain);
         addListener(listenerNewMembers);
+    }
+    public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
+        iListenerRequestOldMembers.setMembers(members);
+        iListenerRequestOldMembers.setBlockChain(blockChain);
+        addListener(iListenerRequestOldMembers);
     }
 
     public void addListenerNewChain(IListenerNewChain listenerNewChain) {

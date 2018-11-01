@@ -1,13 +1,14 @@
-package ru.tcezar.blockchain.transport;
+package ru.tcezar.blockchain.transport.api;
 
-import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public abstract class AbstractMulticastReceiver extends Thread {
+public abstract class AbstractMulticastReceiver implements IListener {
     protected MulticastSocket socket = null;
     protected InetAddress group;
 
@@ -35,15 +36,16 @@ public abstract class AbstractMulticastReceiver extends Thread {
      * @param messageData Данные в сообщении
      * @return True, если необходимо перестать слушать
      */
-    protected abstract boolean processMessage(IMessageData messageData);
+    protected abstract boolean processMessage(IMessage messageData);
 
+    @Override
     public void run() {
         try {
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 try {
-                    IMessageData recivedMessage = SerializationUtils.getData(packet.getData());
+                    IMessage recivedMessage = SerializationUtils.getData(packet.getData());
                     if (processMessage(recivedMessage)) {
                         break;
                     }

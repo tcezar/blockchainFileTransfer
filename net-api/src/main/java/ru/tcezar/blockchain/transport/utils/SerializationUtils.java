@@ -1,4 +1,4 @@
-package ru.tcezar.blockchain.transport;
+package ru.tcezar.blockchain.transport.utils;
 
 import java.io.*;
 
