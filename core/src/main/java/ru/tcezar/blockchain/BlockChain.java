@@ -1,16 +1,16 @@
 package ru.tcezar.blockchain;
 
+import ru.tcezar.blockchain.api.IBlockChain;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockChain {
+public class BlockChain implements IBlockChain {
     private List<Block> blockchain;
-    private Transport transport;
 
-    public BlockChain(Transport transport) {
+    public BlockChain() {
         this.blockchain = new ArrayList<>();
         blockchain.add(getGenesisBlock());
-        this.transport=transport;
     }
 
     public List<Block> getBlockchain() {
@@ -73,7 +73,7 @@ public class BlockChain {
         if (isValidChain(newBlocks) && newBlocks.size() > blockchain.size()) {
             System.out.println("Received blockchain is valid. Replacing current blockchain with received blockchain");
             blockchain = new ArrayList<>(newBlocks);
-            transport.broadcast(responseLatestMsg());//send last msg
+            //transport.broadcast(responseLatestMsg());//send last msg
         } else {
             System.out.println("Received blockchain invalid");
         }

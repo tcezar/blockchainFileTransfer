@@ -1,5 +1,7 @@
 package ru.tcezar.crypto.impl;
 
+import ru.tcezar.crypto.api.ICriptoUtils;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,5 +49,9 @@ public class CryptoHelper {
         dataInputStream.readFully(keyBytes);
         dataInputStream.close();
         return keyBytes;
+    }
+
+    public static ICriptoUtils getUtils() {
+        return null;
     }
 }
