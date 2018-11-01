@@ -63,7 +63,7 @@ public class MulticastingClient {
 
     public static void main(String[] args) {
         try {
-            MulticastingClient multicastingClient = new MulticastingClient(2);
+            MulticastingClient multicastingClient = new MulticastingClient("230.0.0.0", 2);
             int count = multicastingClient.discoverServers("hello");
             System.out.println("send count = " + count);
         } catch (Exception e) {

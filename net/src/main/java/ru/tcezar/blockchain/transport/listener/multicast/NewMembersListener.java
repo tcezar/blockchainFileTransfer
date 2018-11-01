@@ -30,7 +30,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
         super(socket, group);
     }
 
-    protected NewMembersListener(String socketAddr, int socketPort) throws IOException {
+    public NewMembersListener(String socketAddr, int socketPort) throws IOException {
         super(socketAddr, socketPort);
     }
 
