@@ -1,8 +1,8 @@
 package ru.tcezar.blockchain.transport.tcp;
 
+import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.api.IServer;
-import ru.tcezar.blockchain.transport.tcp.AbstractTCP;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
@@ -16,17 +16,18 @@ public abstract class AbstractTCPServer extends AbstractTCP implements IServer {
     private final InetAddress address;
     private boolean running;
     ServerSocket serverSocket;
+    IMember member;
 
-    public AbstractTCPServer(String addr, int port) throws UnknownHostException {
+    public AbstractTCPServer(String addr, int port, IMember member) throws UnknownHostException {
         this.address = InetAddress.getByName(addr);
         this.port = port;
-
+        this.member = member;
     }
 
-    public AbstractTCPServer(int port) throws UnknownHostException {
+    public AbstractTCPServer(int port, IMember member) throws UnknownHostException {
         this.address = null;
         this.port = port;
-
+        this.member = member;
     }
 
 //    public static void main(String argv[]) throws Exception {

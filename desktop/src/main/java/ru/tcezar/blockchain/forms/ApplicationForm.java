@@ -1,6 +1,10 @@
 package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
+import ru.tcezar.blockchain.api.UID;
+import ru.tcezar.blockchain.transport.MulticastPublisher;
+import ru.tcezar.blockchain.transport.messages.Message;
+import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
@@ -9,7 +13,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.Set;
 
 public class ApplicationForm extends JFrame {
 
@@ -71,7 +78,28 @@ public class ApplicationForm extends JFrame {
                         jButton.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                                //TODO отправить файл sendFileForm.getFile();
+
+                                try {
+                                    member.startFileTransfer(new ServerFileTransfer(
+                                            4455,
+                                            member,
+                                            sendFileForm.getFile(),
+                                            getCheckedMemebers()));
+                                    for (UID uid : getCheckedMemebers()) {
+                                        new MulticastPublisher("230.0.0.0", 2002).multicast(
+                                                new Message(
+                                                        uid,
+                                                        member.getUID(),
+                                                        "SEND FILE",
+                                                        sendFileForm.getFile().getName()
+                                                )
+                                        );
+                                    }
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+
                             }
                         });
                         tabbedPane1.setComponentAt(1, jButton);
@@ -83,6 +111,10 @@ public class ApplicationForm extends JFrame {
 
         tabbedPane1.addChangeListener(changeListener);
 
+    }
+
+    private Set<UID> getCheckedMemebers() {
+        return Collections.emptySet();
     }
 
 }
