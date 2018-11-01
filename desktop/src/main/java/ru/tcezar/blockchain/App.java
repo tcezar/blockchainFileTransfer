@@ -1,5 +1,6 @@
 package ru.tcezar.blockchain;
 
+import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.FileTransferForm;
 
 public class App {
@@ -14,8 +15,10 @@ public class App {
         threadTransport.setDaemon(true);
         threadTransport.start();
         FileTransferForm.setTransport(transport);
-        BlockChain blockChain = new BlockChain(transport);
+        BlockChain blockChain = new BlockChain();
+        IMember member = new Member();
         FileTransferForm.setBlockChain(blockChain);
+        FileTransferForm.setMember(member);
         FileTransferForm.run();
     }
 }
