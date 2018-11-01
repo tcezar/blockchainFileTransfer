@@ -2,7 +2,6 @@ package ru.tcezar.blockchain;
 
 import ru.tcezar.blockchain.api.IBlock;
 
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
