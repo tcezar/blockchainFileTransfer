@@ -1,5 +1,6 @@
 package ru.tcezar.blockchain.forms;
 
+import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
@@ -18,8 +19,10 @@ public class ApplicationForm extends JFrame {
 
     private SendFileForm sendFileForm;
     private ListOfMembers listOfMembers;
+    private IMember member;
 
-    public ApplicationForm() throws GeneralSecurityException {
+    public ApplicationForm(IMember member) throws GeneralSecurityException {
+        this.member = member;
 
         listOfMembers = new ListOfMembers();
 

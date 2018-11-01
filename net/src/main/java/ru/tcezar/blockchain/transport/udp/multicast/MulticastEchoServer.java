@@ -26,7 +26,7 @@ public class MulticastEchoServer extends Thread {
 
     public static void main(String[] args) {
         try {
-            MulticastEchoServer multicastEchoServer = new MulticastEchoServer();
+            MulticastEchoServer multicastEchoServer = new MulticastEchoServer("230.0.0.0",4446);
             multicastEchoServer.start();
         } catch (IOException e) {
             e.printStackTrace();

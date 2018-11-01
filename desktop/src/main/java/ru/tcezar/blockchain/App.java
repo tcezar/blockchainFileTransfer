@@ -3,6 +3,7 @@ package ru.tcezar.blockchain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.ApplicationForm;
 import ru.tcezar.blockchain.forms.FileTransferForm;
+import ru.tcezar.blockchain.transport.listener.multicast.NewMembersListener;
 import ru.tcezar.blockchain.transport.udp.multicast.HelloEverybodyServer;
 
 import java.io.IOException;
@@ -20,17 +21,19 @@ public class App {
         });
         threadTransport.setDaemon(true);
         threadTransport.start();
-        FileTransferForm.setTransport(transport);*/
-        BlockChain blockChain = new BlockChain();
-        IMember member = new Member();
-        FileTransferForm.setBlockChain(blockChain);
+        FileTransferForm.setTransport(transport);
+        BlockChain blockChain = new BlockChain();*/
+        Member member = new Member();
+        /*FileTransferForm.setBlockChain(blockChain);
         FileTransferForm.setMember(member);
+        FileTransferForm.run();*/
+        member.addListenerNewMembers(new NewMembersListener("230.0.0.0",20000));
         HelloEverybodyServer helloEverybodyServer = new HelloEverybodyServer(
                 "230.0.0.0", 20000, member);
         helloEverybodyServer.run();
         FileTransferForm.run();
 
-        ApplicationForm applicationForm = new ApplicationForm();
+        ApplicationForm applicationForm = new ApplicationForm(member);
         applicationForm.setVisible(true);
 
     }
