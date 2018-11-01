@@ -27,6 +27,21 @@ public class ApplicationForm extends JFrame {
 
         listOfMembers = new ListOfMembers(member);
 
+        Thread threadTransport = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    JLabel jLabel = new JLabel(listOfMembers.getMembers());
+                    tabbedPane1.setComponentAt(0, jLabel);
+                    try {
+                        Thread.sleep(30000l);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         //Свойства формы по-умолчанию
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
