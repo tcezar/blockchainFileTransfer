@@ -1,7 +1,6 @@
 package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
-import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
@@ -34,7 +33,7 @@ public class ApplicationForm extends JFrame {
                     JLabel jLabel = new JLabel(listOfMembers.getMembers());
                     tabbedPane1.setComponentAt(0, jLabel);
                     try {
-                        Thread.sleep(30000l);
+                        Thread.sleep(300l);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

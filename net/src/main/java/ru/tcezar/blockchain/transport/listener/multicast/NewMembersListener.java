@@ -44,6 +44,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
 
     @Override
     protected boolean processMessage(IMessage message) {
+//        System.out.println("получено сообщение:" + message);
         Message<String> newMemberMessage = (Message) message;
         String data = newMemberMessage.getMessage();
         if (HELLO_ANSWER.equals(data)) {

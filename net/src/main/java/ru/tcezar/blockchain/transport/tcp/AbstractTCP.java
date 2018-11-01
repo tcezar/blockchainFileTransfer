@@ -5,7 +5,7 @@ import java.io.InputStream;
 
 abstract class AbstractTCP {
 
-    byte[] readAllBytesFromInputStream(InputStream inputStream) throws IOException {
+    byte[]  readAllBytesFromInputStream(InputStream inputStream) throws IOException {
         byte[] resultBuff = new byte[0];
         byte[] buff = new byte[1024];
         int k = -1;
