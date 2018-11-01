@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockChain implements IBlockChain {
+    static final long serialVersionUID = 7187392471159151072L;
     private List<Block> blockchain;
 
     public BlockChain() {
