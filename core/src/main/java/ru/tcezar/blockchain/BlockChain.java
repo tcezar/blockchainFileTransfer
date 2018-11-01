@@ -80,6 +80,11 @@ public class BlockChain implements IBlockChain {
         }
     }
 
+    @Override
+    public int getSize() {
+        return this.blockchain.size();
+    }
+
     private Block responseLatestMsg() {
         return null;
     }
