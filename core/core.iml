@@ -9,6 +9,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="crypto" />
+    <orderEntry type="module" module-name="crypto-api" />
+    <orderEntry type="module" module-name="net-api" />
     <orderEntry type="module" module-name="net" />
     <orderEntry type="module" module-name="core-api" />
     <orderEntry type="module" module-name="crypto" />
