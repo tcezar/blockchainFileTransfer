@@ -36,8 +36,8 @@ public final class Member implements IMember {
     final private List<IMember> members;
 
     public Member() throws GeneralSecurityException {
-        ICryptoUtils criptoUtils = new CryptoUtils();
-        keys = criptoUtils.generateKeys();
+        ICryptoUtils cryptoUtils = new CryptoUtils();
+        keys = cryptoUtils.generateKeys();
         blockChain = new BlockChain();
         id = String.valueOf(keys.getPublicKey().getEncoded());
         listeners = Executors.newFixedThreadPool(3);
