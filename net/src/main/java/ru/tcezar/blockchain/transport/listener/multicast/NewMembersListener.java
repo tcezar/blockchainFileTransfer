@@ -3,7 +3,7 @@ package ru.tcezar.blockchain.transport.listener.multicast;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.transport.api.AbstractMulticastReceiver;
+import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
 import ru.tcezar.blockchain.transport.messages.Message;
 
@@ -44,5 +44,15 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
         Message newMemberMessage = (Message) message;
         newMemberMessage.getMessage();
         return false;
+    }
+
+    @Override
+    protected boolean isStoping(IMessage recivedMessage) {
+        return false;
+    }
+
+    @Override
+    protected void errors(IMessage recivedMessage) {
+
     }
 }

@@ -10,11 +10,10 @@ import javax.crypto.Cipher;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
 public class CryptoUtilsTest {
 
@@ -45,7 +44,7 @@ public class CryptoUtilsTest {
 
 
     @Test
-    public void test() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public void test() throws IOException, GeneralSecurityException {
         ICryptoUtils criptoUtils = new CryptoUtils();
 
         IPairKeys pairKeys = criptoUtils.generateKeys();
