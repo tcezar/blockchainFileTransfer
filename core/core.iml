@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -13,6 +13,7 @@
     <orderEntry type="module" module-name="core-api" />
     <orderEntry type="module" module-name="cripto" />
     <orderEntry type="module" module-name="cripto-api" />
+    <orderEntry type="module" module-name="net-api" />
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.29.Final" level="project" />
     <orderEntry type="library" name="Maven: org.bitcoinj:bitcoinj-core:0.14.7" level="project" />
     <orderEntry type="library" name="Maven: com.madgag.spongycastle:core:1.51.0.0" level="project" />
