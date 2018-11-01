@@ -1,7 +1,6 @@
 package ru.tcezar.blockchain.transport.api;
 
 import java.io.File;
-import java.nio.file.Path;
 
 /**
  * сервер отдающий файл
