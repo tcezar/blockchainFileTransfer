@@ -1,6 +1,9 @@
 package ru.tcezar.blockchain.api;
 
-public class UID {
+import java.io.Serializable;
+
+public class UID implements Serializable {
+    private static final long serialVersionUID = 7114619883328691363L;
     public final int id;
     public final String addr;
 
