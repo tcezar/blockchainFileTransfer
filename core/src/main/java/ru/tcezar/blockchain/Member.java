@@ -3,10 +3,15 @@ package ru.tcezar.blockchain;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.transport.api.*;
+import ru.tcezar.config.ConfigKeeper;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +39,32 @@ public final class Member implements IMember {
     final private ExecutorService singleFileTransfers;
     final private String id;
     final private List<IMember> members;
+    final private InetAddress localAdress;
 
-    public Member() throws GeneralSecurityException {
+    public Member() throws GeneralSecurityException, IOException {
         ICryptoUtils cryptoUtils = new CryptoUtils();
-        keys = cryptoUtils.generateKeys();
+        if(ConfigKeeper.checkKeysFilepathConsist()) {
+            keys = cryptoUtils.getKeysFromFiles(
+                    Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.publicKeyCode))),
+                    Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.privateKeyCode))));
+        } else {
+            keys = cryptoUtils.generateKeys();
+            ConfigKeeper.setConfig(ConfigKeeper.publicKeyCode, ConfigKeeper.configDir + File.separator +
+                    ConfigKeeper.publicKeyCode + keys.getPublicKey().hashCode());
+            ConfigKeeper.setConfig(ConfigKeeper.privateKeyCode, ConfigKeeper.configDir + File.separator +
+                    ConfigKeeper.privateKeyCode + keys.getPrivateKey().hashCode());
+            cryptoUtils.saveKeysToFiles(keys,
+                    Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.publicKeyCode))),
+                    Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.privateKeyCode))));
+            ConfigKeeper.saveConfigsToFile();
+        }
         blockChain = new BlockChain();
-        id = String.valueOf(keys.getPublicKey().getEncoded());
+        id = String.valueOf(keys.getPublicKey().hashCode());
         listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
         members = new ArrayList<>();
+        localAdress = InetAddress.getLocalHost();
     }
 
     public void stopFiletransfer() {
@@ -89,5 +110,16 @@ public final class Member implements IMember {
     @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + getId() +
+                ", localAdress=" + getLocalAdress();
+    }
+
+    @Override
+    public InetAddress getLocalAdress() {
+        return localAdress;
     }
 }

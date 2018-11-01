@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 
 public abstract class AbstractMulticastReceiver implements IListener {
     protected MulticastSocket socket = null;
@@ -86,5 +87,5 @@ public abstract class AbstractMulticastReceiver implements IListener {
      *
      * @param recivedMessage
      */
-    protected abstract void errors(IMessage recivedMessage);
+    protected abstract void errors(IMessage recivedMessage) throws UnknownHostException;
 }
