@@ -9,7 +9,7 @@ import java.util.Date;
 public interface IBlock extends Serializable {
     Date getTimestamp();
 
-    Serializable getData();
+    IMessage getData();
 
     String getHash();
 

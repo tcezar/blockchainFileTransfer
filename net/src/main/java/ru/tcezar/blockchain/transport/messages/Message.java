@@ -37,7 +37,7 @@ public class Message<T extends Serializable> implements IMessage {
     }
 
     @Override
-    public Serializable getTheme() {
+    public String getTheme() {
         return this.messageTheme;
     }
 

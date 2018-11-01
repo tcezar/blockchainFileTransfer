@@ -41,7 +41,7 @@ public class BlockChain implements IBlockChain {
             }
 
             @Override
-            public Serializable getTheme() {
+            public String getTheme() {
                 return null;
             }
 
