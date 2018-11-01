@@ -57,12 +57,21 @@ public class ServerFileTransfer extends AbstractTCPServer implements IServerFile
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            if (members.contains(message.getSender())
+                    && member.equals(message.getRecipient())
+                    && "ACCEPT GET FILE".equals(message.getTheme())) {
+                members.remove(message.getSender());
+            }
         }
         return null;
     }
 
     @Override
     protected boolean isStopping(IMessage clientSentence) {
+        if (members.isEmpty()) {
+            return true;
+        }
         return false;
     }
 }
