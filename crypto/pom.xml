@@ -11,13 +11,13 @@
     </parent>
 
     <groupId>ru.tcezar</groupId>
-    <artifactId>cripto</artifactId>
+    <artifactId>crypto</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>ru.tcezar</groupId>
-            <artifactId>cripto-api</artifactId>
+            <artifactId>crypto-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
