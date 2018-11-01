@@ -28,7 +28,6 @@ public class HelloEverybodyServer implements Runnable {
             try {
                 new MulticastPublisher(socketAddr, port).multicast(new Message(null, member.getUID(), "HELLO!", HELLO));
                 try {
-                    System.out.println("отправка приветствия");
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

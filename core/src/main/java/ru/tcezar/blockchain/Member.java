@@ -75,10 +75,12 @@ public final class Member implements IMember {
         singleFileTransfers.submit(singleFileTransfer);
     }
 
+    @Override
     public Set<UID> getMembers() {
         return members;
     }
 
+    @Override
     public IBlockChain getBlockChain() {
         return blockChain;
     }

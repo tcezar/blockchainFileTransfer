@@ -9,9 +9,9 @@ import java.util.List;
 public interface IBlockChain extends Serializable {
     List<IBlock> getBlockchain();
 
-    void generateNextBlock(IMessage blockData);
+    boolean generateNextBlock(IMessage blockData);
 
-    void addBlock(IBlock newBlock);
+    boolean addBlock(IBlock newBlock);
 
     IBlock getLatestBlock();
 
