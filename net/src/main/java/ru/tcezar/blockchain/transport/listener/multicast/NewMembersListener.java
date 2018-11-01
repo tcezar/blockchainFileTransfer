@@ -1,12 +1,10 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
 import ru.tcezar.blockchain.api.IBlockChain;
-import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
 import ru.tcezar.blockchain.transport.messages.Message;
-import ru.tcezar.blockchain.transport.messages.SimpleMessageData;
 import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 
 import java.io.IOException;
@@ -46,11 +44,10 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
 
     @Override
     protected boolean processMessage(IMessage message) {
-        Message<SimpleMessageData<IMember>> newMemberMessage = (Message) message;
-        SimpleMessageData<IMember> data = newMemberMessage.getMessage();
-        if (HELLO_ANSWER.equals(data.getCommand())) {
-            IMember newMember = data.getData();
-            this.addressBook.add(newMember.getUID());
+        Message<String> newMemberMessage = (Message) message;
+        String data = newMemberMessage.getMessage();
+        if (HELLO_ANSWER.equals(data)) {
+            this.addressBook.add(newMemberMessage.getSender());
             // TODO: 01.11.2018 Сверка цепочек
             if (newChainIsMoreActual(0)) {
                 // TODO: 01.11.2018 Запросить актуальную цепочку
@@ -58,8 +55,9 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
                 // TODO: 01.11.2018 Отправить свои данные
             }
             return true;
-        } else if (HELLO.equals(data.getCommand())) {
-
+        } else if (HELLO.equals(newMemberMessage.getMessage())) {
+            System.out.println(String.format("Получен HELLO! %s", newMemberMessage.getSender()));
+            this.addressBook.add(newMemberMessage.getSender());
             return true;
         }
         return false;

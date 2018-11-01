@@ -12,11 +12,13 @@ import static ru.tcezar.blockchain.transport.protocols.NewMembersMessageCommands
  * Created by Michael on 01.11.2018.
  */
 public class HelloEverybodyServer implements Runnable {
-    private MulticastPublisher multicastPublisher;
+    private String socketAddr;
+    private int port;
     private IMember member;
 
     public HelloEverybodyServer(String socketAddr, int port, IMember member) throws IOException {
-        multicastPublisher = new MulticastPublisher(socketAddr, port);
+        this.socketAddr=socketAddr;
+        this.port=port;
         this.member = member;
     }
 
@@ -24,8 +26,9 @@ public class HelloEverybodyServer implements Runnable {
     public void run() {
         while (true) {
             try {
-                multicastPublisher.multicast(new Message(null, member.getUID(), "HELLO!", HELLO));
+                new MulticastPublisher(socketAddr, port).multicast(new Message(null, member.getUID(), "HELLO!", HELLO));
                 try {
+                    System.out.println("отправка приветствия");
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

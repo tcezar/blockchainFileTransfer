@@ -14,7 +14,7 @@ public abstract class AbstractMulticastReceiver implements IListener {
     protected MulticastSocket socket = null;
     protected InetAddress group;
 
-    protected byte[] buf = new byte[256];
+    protected byte[] buf = new byte[1024];
 
     protected AbstractMulticastReceiver(MulticastSocket socket, InetAddress group) throws IOException {
         init(socket, group);
