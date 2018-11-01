@@ -1,12 +1,14 @@
-package ru.tcezar.blockchain.transport.api;
+package ru.tcezar.blockchain.transport.udp.multicast;
 
 import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.transport.api.IListener;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 
 public abstract class AbstractMulticastReceiver implements IListener {
     protected MulticastSocket socket = null;
@@ -44,19 +46,26 @@ public abstract class AbstractMulticastReceiver implements IListener {
             while (true) {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
+                IMessage recivedMessage = null;
                 try {
-                    IMessage recivedMessage = SerializationUtils.getData(packet.getData());
+                    recivedMessage = SerializationUtils.getData(packet.getData());
                     if (processMessage(recivedMessage)) {
-                        break;
+                        // никогда не останавливаемся
+                        errors(recivedMessage);
+//                        break;
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
-                String received = new String(
-                        packet.getData(), 0, packet.getLength());
-                if ("end".equals(received)) {
+                // обработка остановки слушателя
+                if (isStoping(recivedMessage)) {
                     break;
                 }
+//                String received = new String(
+//                        packet.getData(), 0, packet.getLength());
+//                if ("end".equals(received)) {
+//                    break;
+//                }
             }
             socket.leaveGroup(group);
             socket.close();
@@ -65,4 +74,18 @@ public abstract class AbstractMulticastReceiver implements IListener {
         }
 
     }
+
+    /**
+     * обработка остановки потока
+     * @param recivedMessage
+     * @return
+     */
+    protected abstract boolean isStoping(IMessage recivedMessage);
+
+    /**
+     * обработчик ошибки слушателя
+     *
+     * @param recivedMessage
+     */
+    protected abstract void errors(IMessage recivedMessage) throws UnknownHostException;
 }

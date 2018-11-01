@@ -15,9 +15,9 @@
         <module>net-api</module>
         <module>desktop</module>
         <module>config</module>
-        <module>cripto</module>
+        <module>crypto</module>
         <module>core-api</module>
-        <module>cripto-api</module>
+        <module>crypto-api</module>
     </modules>
     <build>
         <plugins>

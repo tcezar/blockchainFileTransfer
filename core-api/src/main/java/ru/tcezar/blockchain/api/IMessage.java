@@ -2,8 +2,10 @@ package ru.tcezar.blockchain.api;
 
 import java.io.Serializable;
 
-public interface IMessage extends Serializable{
-    IMember getRecipient();
-    IMember getSender();
-    IMessageData getMessage();
+public interface IMessage<T extends Serializable> extends Serializable {
+    UID getRecipient();
+    UID getSender();
+
+    T getMessage();
+    T getTheme();
 }
