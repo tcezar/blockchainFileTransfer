@@ -74,6 +74,12 @@ public class Block implements IBlock {
 
     @Override
     public String toString() {
-        return hash;
+        return "Block{" +
+                "index=" + index +
+                ", previousHash='" + previousHash + '\'' +
+                ", timestamp=" + timestamp +
+                ", data=" + data +
+                ", hash='" + hash + '\'' +
+                '}';
     }
 }
