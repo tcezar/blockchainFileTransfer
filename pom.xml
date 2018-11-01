@@ -15,6 +15,8 @@
         <module>desktop</module>
         <module>config</module>
         <module>cripto</module>
+        <module>core-api</module>
+        <module>cripto-api</module>
     </modules>
     <build>
         <plugins>

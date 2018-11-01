@@ -5,5 +5,5 @@ import java.io.Serializable;
 public interface IMessage extends Serializable{
     IMember getRecipient();
     IMember getSender();
-    IDataMessage getMessage();
+    IMessageData getMessage();
 }
