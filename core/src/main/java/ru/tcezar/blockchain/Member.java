@@ -40,7 +40,7 @@ public final class Member implements IMember {
         keys = criptoUtils.generateKeys();
         blockChain = new BlockChain();
         id = String.valueOf(keys.getPublicKey().getEncoded());
-        listeners = Executors.newFixedThreadPool(2);
+        listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
         members = new ArrayList<>();
@@ -69,6 +69,11 @@ public final class Member implements IMember {
     public void addListenerNewMembers(IListenerNewMembers listenerNewMembers) {
         listenerNewMembers.setMembers(members);
         addListener(listenerNewMembers);
+    }
+    public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
+        iListenerRequestOldMembers.setMembers(members);
+        iListenerRequestOldMembers.setBlockChain(blockChain);
+        addListener(iListenerRequestOldMembers);
     }
 
     public void addListenerNewChain(IListenerNewChain listenerNewChain) {
