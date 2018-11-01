@@ -1,6 +1,6 @@
 package ru.tcezar.blockchain.transport.api;
 
-import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public abstract class AbstractMulticastReceiver implements IListener {
      * @param messageData Данные в сообщении
      * @return True, если необходимо перестать слушать
      */
-    protected abstract boolean processMessage(IMessageData messageData);
+    protected abstract boolean processMessage(IMessage messageData);
 
     @Override
     public void run() {
@@ -45,7 +45,7 @@ public abstract class AbstractMulticastReceiver implements IListener {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 try {
-                    IMessageData recivedMessage = SerializationUtils.getData(packet.getData());
+                    IMessage recivedMessage = SerializationUtils.getData(packet.getData());
                     if (processMessage(recivedMessage)) {
                         break;
                     }

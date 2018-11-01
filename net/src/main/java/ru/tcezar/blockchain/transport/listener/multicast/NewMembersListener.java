@@ -2,7 +2,7 @@ package ru.tcezar.blockchain.transport.listener.multicast;
 
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
-import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.api.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
 
@@ -39,7 +39,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
     }
 
     @Override
-    protected boolean processMessage(IMessageData messageData) {
+    protected boolean processMessage(IMessage messageData) {
         return false;
     }
 }

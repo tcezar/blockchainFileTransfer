@@ -68,6 +68,7 @@ public final class Member implements IMember {
 
     public void addListenerNewMembers(INewMembersListener listenerNewMembers) {
         listenerNewMembers.setMembers(members);
+        listenerNewMembers.setBlockChain(blockChain);
         addListener(listenerNewMembers);
     }
     public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
