@@ -30,7 +30,7 @@ public final class Member implements IMember {
      */
     final private ExecutorService listeners;
     final private ExecutorService singleTasks;
-    private IServerFileTranfer singleFileTransfer;
+    final private ExecutorService singleFileTransfers;
     final private String id;
     final private List<IMember> members;
 
@@ -41,7 +41,16 @@ public final class Member implements IMember {
         id = String.valueOf(keys.getPublicKey().getEncoded());
         listeners = Executors.newFixedThreadPool(2);
         singleTasks = Executors.newSingleThreadExecutor();
+        singleFileTransfers = Executors.newSingleThreadExecutor();
         members = new ArrayList<>();
+    }
+
+    public void stopFiletransfer() {
+        singleFileTransfers.shutdown();
+    }
+
+    public void startFileTransfer(IServerFileTranfer singleFileTransfer) {
+        singleFileTransfers.submit(singleFileTransfer);
     }
 
     public List<IMember> getMembers() {
