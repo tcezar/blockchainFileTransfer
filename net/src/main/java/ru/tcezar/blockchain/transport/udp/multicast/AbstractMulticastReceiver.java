@@ -35,7 +35,7 @@ public abstract class AbstractMulticastReceiver implements IListener {
      * Обработчик сообщения
      *
      * @param messageData Данные в сообщении
-     * @return True, если необходимо перестать слушать
+     * @return True, удалось корректно обработать сообщение
      */
     protected abstract boolean processMessage(IMessage messageData);
 
