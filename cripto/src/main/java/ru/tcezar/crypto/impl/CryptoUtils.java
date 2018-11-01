@@ -1,6 +1,6 @@
 package ru.tcezar.crypto.impl;
 
-import ru.tcezar.crypto.api.ICriptoUtils;
+import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 
 import java.io.*;
@@ -10,12 +10,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
-public class CriptoUtils implements ICriptoUtils {
+public class CryptoUtils implements ICryptoUtils {
 
     private KeyPairGenerator keyPairGenerator;
     private KeyFactory keyFactory;
 
-    public CriptoUtils() throws NoSuchAlgorithmException {
+    public CryptoUtils() throws NoSuchAlgorithmException {
         keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(512);
         keyFactory = KeyFactory.getInstance("RSA");

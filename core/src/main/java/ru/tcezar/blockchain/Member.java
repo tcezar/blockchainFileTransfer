@@ -3,10 +3,11 @@ package ru.tcezar.blockchain;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.transport.api.*;
-import ru.tcezar.crypto.api.ICriptoUtils;
+import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
-import ru.tcezar.crypto.impl.CryptoHelper;
+import ru.tcezar.crypto.impl.CryptoUtils;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,8 +35,8 @@ public final class Member implements IMember {
     final private String id;
     final private List<IMember> members;
 
-    public Member() {
-        ICriptoUtils criptoUtils = CryptoHelper.getUtils();
+    public Member() throws NoSuchAlgorithmException {
+        ICryptoUtils criptoUtils = new CryptoUtils();
         keys = criptoUtils.generateKeys();
         blockChain = new BlockChain();
         id = String.valueOf(keys.getPublicKey().getEncoded());

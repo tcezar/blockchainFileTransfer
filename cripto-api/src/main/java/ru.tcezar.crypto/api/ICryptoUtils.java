@@ -7,7 +7,7 @@ import java.security.spec.InvalidKeySpecException;
 /*
     Интерфейс для работы с шифрование
  */
-public interface ICriptoUtils {
+public interface ICryptoUtils {
 
     /**
      * Метод для генерации ключей
