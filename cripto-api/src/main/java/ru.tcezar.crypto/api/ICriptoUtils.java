@@ -1,5 +1,6 @@
 package ru.tcezar.crypto.api;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 /*
@@ -15,11 +16,11 @@ public interface ICriptoUtils {
     IPairKeys generateKeys();
 
     /**
-     * Метод сохранения клюей в файлы
+     * Метод сохранения ключей в файлы
      *
      * @param keys           ключи
      * @param publicKeyPath  путь до файла публичного ключа
      * @param privateKeyPath путь до файла приватного ключа
      */
-    void saveKeys(IPairKeys keys, Path publicKeyPath, Path privateKeyPath);
+    void saveKeysToFiles(IPairKeys keys, Path publicKeyPath, Path privateKeyPath) throws IOException;
 }

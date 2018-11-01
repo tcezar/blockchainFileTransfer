@@ -3,6 +3,8 @@ package ru.tcezar.crypto.impl;
 import ru.tcezar.crypto.api.ICriptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -25,7 +27,15 @@ public class CriptoUtils implements ICriptoUtils {
     }
 
     @Override
-    public void saveKeys(IPairKeys keys, Path publicKeyPath, Path privateKeyPath) {
+    public void saveKeysToFiles(IPairKeys keys, Path publicKeyPath, Path privateKeyPath) throws IOException {
+        byte[] publicKeyBytes = keys.getPublicKey().getEncoded();
+        FileOutputStream fileOutputStream = new FileOutputStream(publicKeyPath.toFile());
+        fileOutputStream.write(publicKeyBytes);
+        fileOutputStream.close();
 
+        byte[] privateKeyBytes = keys.getPrivateKey().getEncoded();
+        fileOutputStream = new FileOutputStream(privateKeyPath.toFile());
+        fileOutputStream.write(privateKeyBytes);
+        fileOutputStream.close();
     }
 }
