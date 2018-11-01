@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ConfigKeeperImpl implements IConfigKeeper {
+public class ConfigKeeper implements IConfigKeeper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigKeeperImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigKeeper.class);
 
     private Properties properties = new Properties();
 
-    public ConfigKeeperImpl() {
+    public ConfigKeeper() {
 
     }
 
-    public ConfigKeeperImpl(String filepath) {
+    public ConfigKeeper(String filepath) {
         LOGGER.info("Processing of file by filepath: {}", filepath);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filepath);
 
