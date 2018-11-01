@@ -4,25 +4,25 @@ import ru.tcezar.blockchain.Member;
 import ru.tcezar.blockchain.api.UID;
 
 import javax.swing.*;
+import java.util.Set;
 
 public class ListOfMembers {
 
-    private static String members;
+    private static Set<UID> members;
 
 
     public ListOfMembers(Member member) {
 //        updateMembers();
-
-        String result = "";
-
-        for (UID uid : member.getMembers()) {
-            result += "Участник №" + uid.toString();
-        }
-
+        members = member.getMembers();
     }
 
     public String getMembers() {
-        return members;
+        String result = "";
+
+        for (UID uid : members) {
+            result += "Участник №" + uid.toString();
+        }
+        return result;
     }
 
     public void updateMembers() {
@@ -34,7 +34,6 @@ public class ListOfMembers {
 //        }
 //
 //        members = new JList<>(mems);
-
 
 
     }
