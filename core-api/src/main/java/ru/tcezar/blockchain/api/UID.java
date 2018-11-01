@@ -15,6 +15,11 @@ public class UID implements Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof UID) {
+            String checkIP = System.getProperty("checkIP");
+            if (Boolean.valueOf(checkIP)) {
+                return ((UID) obj).id == this.id
+                        && ((UID) obj).addr.equals(this.addr);
+            }
             return ((UID) obj).id == this.id;
         }
         return super.equals(obj);

@@ -1,6 +1,7 @@
 package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
+import ru.tcezar.blockchain.api.IBlock;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
@@ -21,6 +22,7 @@ public class ApplicationForm extends JFrame {
     private JPanel mainControl;
     private JTabbedPane tabbedPane1;
     private JList listMembers;
+    private JList listChains;
 
     private SendFileForm sendFileForm = new SendFileForm();
     private Member member;
@@ -39,6 +41,14 @@ public class ApplicationForm extends JFrame {
         return result;
     }
 
+    private DefaultListModel splitChains() {
+        DefaultListModel result = new DefaultListModel();
+        for (IBlock iBlock : member.getBlockChain().getBlockchain()) {
+            result.addElement( iBlock.toString());
+        }
+        return result;
+    }
+
     public ApplicationForm(Member member) throws GeneralSecurityException {
         this.member = member;
 
@@ -47,7 +57,22 @@ public class ApplicationForm extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(mainPanel);
         setTitle("Участник №" + member.getUID());
-        listMembers.setModel(splitMembers());
+
+        Thread threadTransport = new Thread(() -> {
+            while (true) {
+                if(listMembers.getModel().getSize() != this.member.getMembers().size()){
+                    listMembers.setModel(splitMembers());
+                    listMembers.repaint();
+                }
+                try {
+                    Thread.sleep(5000l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        threadTransport.setDaemon(true);
+        threadTransport.start();
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
@@ -58,6 +83,7 @@ public class ApplicationForm extends JFrame {
                         listMembers.setModel(splitMembers());
                     case 1:
                         try {
+                            sendFileForm.chooseFile();
                             member.startFileTransfer(new ServerFileTransfer(
                                     4455,
                                     member,
@@ -88,6 +114,7 @@ public class ApplicationForm extends JFrame {
                         break;
                     case 2:
                         //TODO добавить историю
+                        listChains.setModel(splitChains());
                         break;
                 }
             }
