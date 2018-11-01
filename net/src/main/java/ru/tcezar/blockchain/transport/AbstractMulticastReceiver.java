@@ -1,13 +1,14 @@
 package ru.tcezar.blockchain.transport;
 
 import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.transport.api.IListener;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public abstract class AbstractMulticastReceiver extends Thread {
+public abstract class AbstractMulticastReceiver implements IListener {
     protected MulticastSocket socket = null;
     protected InetAddress group;
 
@@ -37,6 +38,7 @@ public abstract class AbstractMulticastReceiver extends Thread {
      */
     protected abstract boolean processMessage(IMessageData messageData);
 
+    @Override
     public void run() {
         try {
             while (true) {
