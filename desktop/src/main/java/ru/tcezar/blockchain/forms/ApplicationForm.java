@@ -9,15 +9,10 @@ import java.security.GeneralSecurityException;
 public class ApplicationForm extends JFrame {
 
     private JPanel mainPanel;
-    private JButton sendButton;
-    private JButton membersButton;
-    private JButton historyButton;
     private JPanel mainControl;
-    private JLabel idMember;
+    private JTabbedPane tabbedPane1;
 
     public ApplicationForm() throws GeneralSecurityException {
-
-        super("Task 12 / WorkOnDon");
 
         //По-умолчанию на весь экран
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -26,7 +21,7 @@ public class ApplicationForm extends JFrame {
 
         ICryptoUtils cryptoUtils = new CryptoUtils();
 
-        idMember.setText("Участник №" + cryptoUtils.generateKeys().getPublicKey().hashCode());
+        setTitle("Участник №" + cryptoUtils.generateKeys().getPublicKey().hashCode());
 
     }
 
