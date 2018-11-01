@@ -3,27 +3,28 @@ package ru.tcezar.crypto.impl;
 import ru.tcezar.crypto.api.ICriptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 public class CriptoUtils implements ICriptoUtils {
 
+    private KeyPairGenerator keyPairGenerator;
+    private KeyFactory keyFactory;
+
+    public CriptoUtils() throws NoSuchAlgorithmException {
+        keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(512);
+        keyFactory = KeyFactory.getInstance("RSA");
+    }
+
     @Override
     public IPairKeys generateKeys() {
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(512);
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            return new PairKeys(keyPair.getPublic(), keyPair.getPrivate());
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("При генерации пары ключей произошла ошибка!");
-            e.printStackTrace();
-            return null;
-        }
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        return new PairKeys(keyPair.getPublic(), keyPair.getPrivate());
     }
 
     @Override
@@ -37,5 +38,31 @@ public class CriptoUtils implements ICriptoUtils {
         fileOutputStream = new FileOutputStream(privateKeyPath.toFile());
         fileOutputStream.write(privateKeyBytes);
         fileOutputStream.close();
+    }
+
+    @Override
+    public IPairKeys getKeysFromFiles(Path publicKeyPath, Path privateKeyPath) throws IOException, InvalidKeySpecException {
+        PublicKey publicKey = getPublicKeyFromFile(publicKeyPath);
+        PrivateKey privateKey = getPrivateKeyFromFile(privateKeyPath);
+        return new PairKeys(publicKey, privateKey);
+    }
+
+    private PublicKey getPublicKeyFromFile(Path publicKeyPath) throws IOException, InvalidKeySpecException {
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(getDataFromFile(publicKeyPath));
+        return keyFactory.generatePublic(spec);
+    }
+
+    public PrivateKey getPrivateKeyFromFile(Path privateKeyPath) throws IOException, InvalidKeySpecException {
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(getDataFromFile(privateKeyPath));
+        return keyFactory.generatePrivate(spec);
+    }
+
+    private byte[] getDataFromFile(Path filePath) throws IOException {
+        File file = filePath.toFile();
+        DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
+        byte[] keyBytes = new byte[(int) file.length()];
+        dataInputStream.readFully(keyBytes);
+        dataInputStream.close();
+        return keyBytes;
     }
 }
