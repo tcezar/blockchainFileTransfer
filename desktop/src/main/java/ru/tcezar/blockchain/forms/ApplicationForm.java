@@ -5,9 +5,7 @@ import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
-import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.crypto.api.ICryptoUtils;
-import ru.tcezar.crypto.impl.CryptoUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -35,7 +33,7 @@ public class ApplicationForm extends JFrame {
     private DefaultListModel splitMembers() {
         DefaultListModel result = new DefaultListModel();
 
-        for(UID uid : member.getMembers()) {
+        for (UID uid : member.getMembers()) {
             result.addElement("Участник №" + uid.toString());
         }
 
@@ -52,7 +50,7 @@ public class ApplicationForm extends JFrame {
         setTitle("Участник №" + member.getUID()); //TODO заменить на ключ, который будет считываться с файла конфигурации
 
         listMembers.setModel(splitMembers());
-        ChangeListener changeListener = new ChangeListener() {
+        /*ChangeListener changeListener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
 
@@ -92,33 +90,8 @@ public class ApplicationForm extends JFrame {
                         tabbedPane1.setComponentAt(1, jButton);
                         break;
                 }
-
-//        ChangeListener changeListener = new ChangeListener() {
-//            @Override
-//            public void stateChanged(ChangeEvent e) {
-//
-//                switch (tabbedPane1.getSelectedIndex()) {
-//                    case 1:
-//                        sendFileForm.chooseFile();
-//
-//                        JLabel jLabel = new JLabel(sendFileForm.getFile().getAbsolutePath() + sendFileForm.getFile().getName());
-//                        tabbedPane1.setComponentAt(1, jLabel);
-//                        JButton jButton = new JButton("Отправить");
-//                        jButton.addActionListener(new ActionListener() {
-//                            @Override
-//                            public void actionPerformed(ActionEvent e) {
-//                                //TODO отправить файл sendFileForm.getFile();
-//                            }
-//                        });
-//                        tabbedPane1.setComponentAt(1, jButton);
-//                        break;
-//                }
-//
-//            }
-//        };
-//
-//        tabbedPane1.addChangeListener(changeListener);
-
+            }
+        };*/
     }
 
     private Set<UID> getCheckedMemebers() {
