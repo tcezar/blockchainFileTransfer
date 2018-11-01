@@ -83,6 +83,7 @@ public class ApplicationForm extends JFrame {
                 switch (tabbedPane1.getSelectedIndex()) {
                     case 0:
                         listMembers.setModel(splitMembers());
+                        break;
                     case 1:
                         try {
                             sendFileForm.chooseFile();
