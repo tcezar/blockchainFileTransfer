@@ -4,8 +4,10 @@ import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.ApplicationForm;
 import ru.tcezar.blockchain.forms.FileTransferForm;
 
+import java.security.GeneralSecurityException;
+
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GeneralSecurityException {
         /*Transport transport = new Transport(5700,5800);
         Thread threadTransport = new Thread(new Runnable() {
             @Override
