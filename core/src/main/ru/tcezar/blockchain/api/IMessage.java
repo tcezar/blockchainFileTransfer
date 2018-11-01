@@ -1,7 +1,4 @@
-package ru.tcezar.blockchain.transport.messages;
-
-import ru.tcezar.blockchain.api.IDataMessage;
-import ru.tcezar.blockchain.api.IMembers;
+package ru.tcezar.blockchain.api;
 
 import java.io.Serializable;
 
