@@ -21,6 +21,7 @@ public class ApplicationForm extends JFrame {
 
         //По-умолчанию на весь экран
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         add(mainPanel);
 
