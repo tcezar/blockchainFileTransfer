@@ -12,11 +12,12 @@ public class Message<T extends Serializable> implements IMessage {
     private IMember recipient;
     private IMember sender;
     private T messageData;
-    private T messageTheme;
+    private String messageTheme;
 
-    private Message(IMember recipient, IMember sender, T data) {
+    private Message(IMember recipient, IMember sender, String messageTheme, T data) {
         this.recipient = recipient;
         this.sender = sender;
+        this.messageTheme = messageTheme;
         this.messageData = data;
     }
 
@@ -38,5 +39,11 @@ public class Message<T extends Serializable> implements IMessage {
     @Override
     public Serializable getTheme() {
         return this.messageTheme;
+    }
+
+    @Override
+    public String toString() {
+        String recipient = getRecipient() == null ? "ALL USERS" : getRecipient().getId();
+        return String.format("%s -> %s. %s:%s", getSender().getId(), recipient, getTheme(), getMessage());
     }
 }
