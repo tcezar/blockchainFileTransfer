@@ -52,6 +52,6 @@ public class CryptoHelper {
     }
 
     public static ICriptoUtils getUtils() {
-        return null;
+        return new CriptoUtils();
     }
 }

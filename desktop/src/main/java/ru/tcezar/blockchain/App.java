@@ -1,11 +1,12 @@
 package ru.tcezar.blockchain;
 
 import ru.tcezar.blockchain.api.IMember;
+import ru.tcezar.blockchain.forms.ApplicationForm;
 import ru.tcezar.blockchain.forms.FileTransferForm;
 
 public class App {
     public static void main(String[] args) {
-        Transport transport = new Transport(5700,5800);
+        /*Transport transport = new Transport(5700,5800);
         Thread threadTransport = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -19,6 +20,10 @@ public class App {
         IMember member = new Member();
         FileTransferForm.setBlockChain(blockChain);
         FileTransferForm.setMember(member);
-        FileTransferForm.run();
+        FileTransferForm.run();*/
+
+        ApplicationForm applicationForm = new ApplicationForm();
+        applicationForm.setVisible(true);
+
     }
 }
