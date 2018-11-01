@@ -89,21 +89,18 @@ public final class Member implements IMember {
         listeners.submit(listener);
     }
 
-    @Override
     public void addListenerNewMembers(INewMembersListener listenerNewMembers) {
         listenerNewMembers.setMembers(members);
         listenerNewMembers.setBlockChain(blockChain);
         addListener(listenerNewMembers);
     }
 
-    @Override
     public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
         iListenerRequestOldMembers.setMembers(members);
         iListenerRequestOldMembers.setBlockChain(blockChain);
         addListener(iListenerRequestOldMembers);
     }
 
-    @Override
     public void addListenerNewChain(IListenerNewChain listenerNewChain) {
         listenerNewChain.setBlockChain(blockChain);
         addListener(listenerNewChain);

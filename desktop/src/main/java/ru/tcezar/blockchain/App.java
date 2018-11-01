@@ -12,7 +12,7 @@ import java.security.GeneralSecurityException;
 public class App {
     public static void main(String[] args) throws GeneralSecurityException, IOException {
 
-        IMember member = new Member();
+        Member member = new Member();
         member.addListenerNewMembers(new NewMembersListener("230.0.0.0", 2001));
         member.addListenerNewChain(new NewChainsListener("230.0.0.0",2002));
 //        member.addListenerRequestOldMembers(new n("230.0.0.0",20002));

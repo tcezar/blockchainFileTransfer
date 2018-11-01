@@ -15,12 +15,6 @@ public interface IMember extends Serializable {
 
     IBlockChain getBlockChain();
 
-    void addListenerNewMembers(INewMembersListener listenerNewMembers);
-
-    void addListenerNewChain(IListenerNewChain listenerNewChain);
-
-    void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers);
-
     UID getUID();
 
 
