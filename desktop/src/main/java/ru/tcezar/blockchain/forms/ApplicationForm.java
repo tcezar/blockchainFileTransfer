@@ -42,6 +42,9 @@ public class ApplicationForm extends JFrame {
             }
         });
 
+        threadTransport.setDaemon(true);
+        threadTransport.start();
+
         //Свойства формы по-умолчанию
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
