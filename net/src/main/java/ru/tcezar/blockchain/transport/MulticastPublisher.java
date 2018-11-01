@@ -33,6 +33,7 @@ public class MulticastPublisher {
     }
 
     public void multicast(IMessage multicastMessage) throws IOException {
+        System.out.println(multicastMessage);
         buf = SerializationUtils.serializeObject(multicastMessage);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, port);
         socket.send(packet);

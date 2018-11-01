@@ -5,9 +5,9 @@ import java.util.Properties;
 
 public class ConfigKeeper {
 
-    public static final String configDir = System.getProperty("user.dir") + "\\config";
+    public static final String configDir = System.getProperty("user.dir") + File.separator + "config";
 
-    private static final String propertyFilepath = configDir + "\\main.properties";
+    private static final String propertyFilepath = configDir + File.separator + "main.properties";
     private static final Properties properties = new Properties();
 
     public static final String publicKeyCode = "publicKey";

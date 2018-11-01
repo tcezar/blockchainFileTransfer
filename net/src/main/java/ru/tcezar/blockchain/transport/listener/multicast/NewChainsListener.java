@@ -25,7 +25,7 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
         super(socket, group);
     }
 
-    protected NewChainsListener(String socketAddr, int socketPort) throws IOException {
+    public NewChainsListener(String socketAddr, int socketPort) throws IOException {
         super(socketAddr, socketPort);
     }
 
