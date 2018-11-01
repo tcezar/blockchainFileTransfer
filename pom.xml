@@ -7,6 +7,14 @@
     <groupId>ru.tcezar</groupId>
     <artifactId>blockchainFileTransfer</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>core</module>
+        <module>net</module>
+        <module>desktop</module>
+        <module>config</module>
+        <module>cripto</module>
+    </modules>
     <build>
         <plugins>
             <plugin>
