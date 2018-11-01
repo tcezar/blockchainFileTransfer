@@ -16,7 +16,7 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-public class CriptoUtilsTest {
+public class CryptoUtilsTest {
 
     private static final Path publicKeyPath = Paths.get(System.getProperty("user.dir") + "\\publicKey");
     private static final Path privateKeyPath = Paths.get(System.getProperty("user.dir") + "\\privateKey");
