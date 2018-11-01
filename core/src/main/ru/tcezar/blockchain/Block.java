@@ -1,5 +1,7 @@
 package ru.tcezar.blockchain;
 
+import ru.tcezar.blockchain.api.IBlock;
+
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -7,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 
-public class Block implements Serializable {
+public class Block implements IBlock {
     final private long index;
     final private String previousHash;
     final private Date timestamp;
