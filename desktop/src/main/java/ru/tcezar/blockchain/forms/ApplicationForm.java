@@ -56,7 +56,7 @@ public class ApplicationForm extends JFrame {
 
         ICryptoUtils cryptoUtils = new CryptoUtils();
 
-        setTitle("Участник №" + member.getUID()); //TODO заменить на ключ, который будет считываться с файла конфигурации
+        setTitle("Участник №" + this.member.getUID());
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
