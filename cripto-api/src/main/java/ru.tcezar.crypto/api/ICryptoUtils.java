@@ -2,7 +2,7 @@ package ru.tcezar.crypto.api;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.security.spec.InvalidKeySpecException;
+import java.security.GeneralSecurityException;
 
 /*
     Интерфейс для работы с шифрование
@@ -14,7 +14,7 @@ public interface ICryptoUtils {
      *
      * @return возвращает пару ключей
      */
-    IPairKeys generateKeys();
+    IPairKeys generateKeys() throws GeneralSecurityException;
 
     /**
      * Метод сохранения ключей в файлы
@@ -32,5 +32,5 @@ public interface ICryptoUtils {
      * @param privateKeyPath путь до файла приватного ключа
      * @return набор ключей
      */
-    IPairKeys getKeysFromFiles(Path publicKeyPath, Path privateKeyPath) throws IOException, InvalidKeySpecException;
+    IPairKeys getKeysFromFiles(Path publicKeyPath, Path privateKeyPath) throws IOException, GeneralSecurityException;
 }

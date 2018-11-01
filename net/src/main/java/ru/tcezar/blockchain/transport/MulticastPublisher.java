@@ -1,6 +1,6 @@
 package ru.tcezar.blockchain.transport;
 
-import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class MulticastPublisher {
         this.port = port;
     }
 
-    public void multicast(IMessageData multicastMessage) throws IOException {
+    public void multicast(IMessage multicastMessage) throws IOException {
         buf = SerializationUtils.serializeObject(multicastMessage);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, port);
         socket.send(packet);
