@@ -85,6 +85,7 @@ public class ApplicationForm extends JFrame {
                         listMembers.setModel(splitMembers());
                     case 1:
                         try {
+                            sendFileForm.chooseFile();
                             member.startFileTransfer(new ServerFileTransfer(
                                     4455,
                                     member,
