@@ -1,4 +1,4 @@
-package ru.lib.impl;
+package ru.tcezar.crypto.impl;
 
 import java.io.DataInputStream;
 import java.io.File;

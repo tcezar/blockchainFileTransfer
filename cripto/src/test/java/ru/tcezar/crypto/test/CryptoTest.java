@@ -1,7 +1,7 @@
-package ru.lib.test;
+package ru.tcezar.crypto.test;
 
 import org.junit.Test;
-import ru.lib.impl.CryptoHelper;
+import ru.tcezar.crypto.impl.CryptoHelper;
 
 import javax.crypto.Cipher;
 import java.security.Key;
