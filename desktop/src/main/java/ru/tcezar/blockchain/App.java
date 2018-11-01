@@ -1,6 +1,5 @@
 package ru.tcezar.blockchain;
 
-import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.ApplicationForm;
 import ru.tcezar.blockchain.transport.listener.multicast.NewChainsListener;
 import ru.tcezar.blockchain.transport.listener.multicast.NewMembersListener;
@@ -13,7 +12,7 @@ public class App {
     public static void main(String[] args) throws GeneralSecurityException, IOException {
 
         Member member = new Member();
-        member.addListenerNewMembers(new NewMembersListener("230.0.0.0", 2001));
+        member.addListenerNewMembers(new NewMembersListener("230.0.0.0", 2001, member));
         member.addListenerNewChain(new NewChainsListener("230.0.0.0",2002));
 //        member.addListenerRequestOldMembers(new n("230.0.0.0",20002));
         HelloEverybodyServer helloEverybodyServer = new HelloEverybodyServer(
