@@ -1,6 +1,7 @@
 package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
+import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
@@ -27,7 +28,7 @@ public class ApplicationForm extends JFrame {
     private JList listMembers;
 
     private SendFileForm sendFileForm = new SendFileForm();
-    private Member member;
+    private IMember member;
     private ICryptoUtils cryptoUtils;
 
     private DefaultListModel splitMembers() {
@@ -40,7 +41,7 @@ public class ApplicationForm extends JFrame {
         return result;
     }
 
-    public ApplicationForm(Member member) throws GeneralSecurityException {
+    public ApplicationForm(IMember member) throws GeneralSecurityException {
         this.member = member;
 
         //Свойства формы по-умолчанию

@@ -75,10 +75,12 @@ public final class Member implements IMember {
         singleFileTransfers.submit(singleFileTransfer);
     }
 
+    @Override
     public Set<UID> getMembers() {
         return members;
     }
 
+    @Override
     public IBlockChain getBlockChain() {
         return blockChain;
     }
@@ -87,18 +89,21 @@ public final class Member implements IMember {
         listeners.submit(listener);
     }
 
+    @Override
     public void addListenerNewMembers(INewMembersListener listenerNewMembers) {
         listenerNewMembers.setMembers(members);
         listenerNewMembers.setBlockChain(blockChain);
         addListener(listenerNewMembers);
     }
 
+    @Override
     public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
         iListenerRequestOldMembers.setMembers(members);
         iListenerRequestOldMembers.setBlockChain(blockChain);
         addListener(iListenerRequestOldMembers);
     }
 
+    @Override
     public void addListenerNewChain(IListenerNewChain listenerNewChain) {
         listenerNewChain.setBlockChain(blockChain);
         addListener(listenerNewChain);
