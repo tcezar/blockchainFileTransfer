@@ -6,9 +6,6 @@ import ru.tcezar.crypto.api.ICriptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoHelper;
 
-import java.security.PrivateKey;
-import java.security.PublicKey;
-
 public final class Member implements IMember {
     static final long serialVersionUID = 7187392471159151072L;
     final private IPairKeys keys;
