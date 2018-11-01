@@ -1,9 +1,5 @@
 package ru.tcezar.blockchain.api;
 
-import ru.tcezar.blockchain.transport.api.IListenerNewChain;
-import ru.tcezar.blockchain.transport.api.IListenerRequestOldMembers;
-import ru.tcezar.blockchain.transport.api.INewMembersListener;
-
 import java.io.Serializable;
 import java.util.Set;
 
