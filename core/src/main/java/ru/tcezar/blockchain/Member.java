@@ -66,7 +66,7 @@ public final class Member implements IMember {
         listeners.submit(listener);
     }
 
-    public void addListenerNewMembers(IListenerNewMembers listenerNewMembers) {
+    public void addListenerNewMembers(INewMembersListener listenerNewMembers) {
         listenerNewMembers.setMembers(members);
         addListener(listenerNewMembers);
     }

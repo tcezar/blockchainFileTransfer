@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * слушатель новых участников
  */
-public interface IListenerNewMembers extends IListener {
+public interface INewMembersListener extends IListener {
     void setMembers(List<IMember> members);
 }
