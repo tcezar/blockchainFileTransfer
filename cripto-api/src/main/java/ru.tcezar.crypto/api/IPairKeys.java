@@ -11,12 +11,14 @@ public interface IPairKeys extends Serializable {
 
     /**
      * Метод получения публичного ключа
+     *
      * @return публичный ключ
      */
     PublicKey getPublicKey();
 
     /**
      * Метод получения приватного ключа
+     *
      * @return приватный ключ
      */
     PrivateKey getPrivateKey();

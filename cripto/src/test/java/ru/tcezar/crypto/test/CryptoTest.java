@@ -13,11 +13,11 @@ public class CryptoTest {
     private static final String testMsg = "Hello. It's test message!";
 
     @Test
-    public void test1() throws Exception {
+    public void simpleCrypto() throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
 
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(1024);
+        keyPairGenerator.initialize(512);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         Key publicKey = keyPair.getPublic();
         Key privateKey = keyPair.getPrivate();
