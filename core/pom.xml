@@ -34,6 +34,11 @@
             <artifactId>cripto-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>ru.tcezar</groupId>
+            <artifactId>net-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     
 </project>

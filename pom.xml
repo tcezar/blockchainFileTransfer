@@ -12,6 +12,7 @@
     <modules>
         <module>core</module>
         <module>net</module>
+        <module>net-api</module>
         <module>desktop</module>
         <module>config</module>
         <module>cripto</module>
