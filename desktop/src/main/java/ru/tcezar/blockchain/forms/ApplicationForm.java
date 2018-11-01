@@ -2,6 +2,10 @@ package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
 import ru.tcezar.blockchain.api.UID;
+import ru.tcezar.blockchain.transport.MulticastPublisher;
+import ru.tcezar.blockchain.transport.messages.Message;
+import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
+import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
@@ -10,7 +14,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.Set;
 
 public class ApplicationForm extends JFrame {
 
@@ -45,6 +52,46 @@ public class ApplicationForm extends JFrame {
         setTitle("Участник №" + member.getUID()); //TODO заменить на ключ, который будет считываться с файла конфигурации
 
         listMembers.setModel(splitMembers());
+        ChangeListener changeListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+
+                switch (tabbedPane1.getSelectedIndex()) {
+                    case 1:
+                        sendFileForm = new SendFileForm();
+                        JLabel jLabel = new JLabel(sendFileForm.getFile().getAbsolutePath() + sendFileForm.getFile().getName());
+                        tabbedPane1.setComponentAt(1, jLabel);
+                        JButton jButton = new JButton("Отправить");
+                        jButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+
+                                try {
+                                    member.startFileTransfer(new ServerFileTransfer(
+                                            4455,
+                                            member,
+                                            sendFileForm.getFile(),
+                                            getCheckedMemebers()));
+                                    for (UID uid : getCheckedMemebers()) {
+                                        new MulticastPublisher("230.0.0.0", 2002).multicast(
+                                                new Message(
+                                                        uid,
+                                                        member.getUID(),
+                                                        "SEND FILE",
+                                                        sendFileForm.getFile().getName()
+                                                )
+                                        );
+                                    }
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+
+                            }
+                        });
+                        tabbedPane1.setComponentAt(1, jButton);
+                        break;
+                }
 
 //        ChangeListener changeListener = new ChangeListener() {
 //            @Override
@@ -72,6 +119,10 @@ public class ApplicationForm extends JFrame {
 //
 //        tabbedPane1.addChangeListener(changeListener);
 
+    }
+
+    private Set<UID> getCheckedMemebers() {
+        return Collections.emptySet();
     }
 
 }
