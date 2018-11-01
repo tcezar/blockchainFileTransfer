@@ -45,14 +45,14 @@ public class CryptoUtilsTest {
 
     @Test
     public void test() throws IOException, GeneralSecurityException {
-        ICryptoUtils criptoUtils = new CryptoUtils();
+        ICryptoUtils cryptoUtils = new CryptoUtils();
 
-        IPairKeys pairKeys = criptoUtils.generateKeys();
+        IPairKeys pairKeys = cryptoUtils.generateKeys();
         Assert.assertNotNull(pairKeys);
 
-        criptoUtils.saveKeysToFiles(pairKeys, publicKeyPath, privateKeyPath);
+        cryptoUtils.saveKeysToFiles(pairKeys, publicKeyPath, privateKeyPath);
 
-        IPairKeys pairKeysFromFiles = criptoUtils.getKeysFromFiles(publicKeyPath, privateKeyPath);
+        IPairKeys pairKeysFromFiles = cryptoUtils.getKeysFromFiles(publicKeyPath, privateKeyPath);
         Assert.assertEquals(pairKeys.getPublicKey(), pairKeysFromFiles.getPublicKey());
         Assert.assertEquals(pairKeys.getPrivateKey(), pairKeysFromFiles.getPrivateKey());
     }
