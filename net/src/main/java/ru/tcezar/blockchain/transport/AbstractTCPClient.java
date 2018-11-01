@@ -1,7 +1,6 @@
 package ru.tcezar.blockchain.transport;
 
 import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.api.IMessageData;
 import ru.tcezar.blockchain.transport.api.IClient;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
