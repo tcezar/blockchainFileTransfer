@@ -5,5 +5,6 @@ import java.io.Serializable;
 /**
  * участник цепочки (клиента=сервер)
  */
-public interface IMembers extends Serializable {
+public interface IMember extends Serializable {
+    String getId();
 }

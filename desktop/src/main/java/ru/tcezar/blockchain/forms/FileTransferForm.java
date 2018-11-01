@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.Map;
 import java.util.Set;

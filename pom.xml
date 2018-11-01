@@ -16,6 +16,7 @@
         <module>config</module>
         <module>cripto</module>
         <module>coreapi</module>
+        <module>criptoapi</module>
     </modules>
     <build>
         <plugins>
