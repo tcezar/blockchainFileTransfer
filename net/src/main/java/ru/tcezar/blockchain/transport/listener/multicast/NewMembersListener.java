@@ -5,6 +5,7 @@ import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.api.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
+import ru.tcezar.blockchain.transport.messages.Message;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -39,7 +40,9 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
     }
 
     @Override
-    protected boolean processMessage(IMessage messageData) {
+    protected boolean processMessage(IMessage message) {
+        Message newMemberMessage = (Message) message;
+        newMemberMessage.getMessage();
         return false;
     }
 }
