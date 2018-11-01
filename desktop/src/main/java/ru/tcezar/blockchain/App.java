@@ -1,8 +1,6 @@
 package ru.tcezar.blockchain;
 
-import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.ApplicationForm;
-import ru.tcezar.blockchain.forms.FileTransferForm;
 
 import java.security.GeneralSecurityException;
 

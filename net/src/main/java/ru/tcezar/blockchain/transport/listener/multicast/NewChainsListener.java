@@ -1,6 +1,9 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
-import ru.tcezar.blockchain.api.*;
+import ru.tcezar.blockchain.api.IBlock;
+import ru.tcezar.blockchain.api.IBlockChain;
+import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.api.IListenerNewChain;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.tcp.AbstractTCPClient;

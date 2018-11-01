@@ -1,6 +1,9 @@
 package ru.tcezar.blockchain;
 
-import ru.tcezar.blockchain.api.*;
+import ru.tcezar.blockchain.api.IBlock;
+import ru.tcezar.blockchain.api.IBlockChain;
+import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.api.UID;
 
 import java.io.Serializable;
 import java.util.ArrayList;

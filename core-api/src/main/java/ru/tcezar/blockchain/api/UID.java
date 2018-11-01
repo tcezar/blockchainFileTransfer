@@ -1,6 +1,6 @@
 package ru.tcezar.blockchain.api;
 
-public class UID{
+public class UID {
     public final int id;
     public final String addr;
 

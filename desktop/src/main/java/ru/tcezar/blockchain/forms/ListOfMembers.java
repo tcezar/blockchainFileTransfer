@@ -1,8 +1,6 @@
 package ru.tcezar.blockchain.forms;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 
 public class ListOfMembers {
 
@@ -21,7 +19,7 @@ public class ListOfMembers {
         DefaultListModel<String> list = new DefaultListModel<>();
         String[] mems = TestUtils.getMembers().split(";");
 
-        for (int i = 0 ; i < mems.length ; ++i) {
+        for (int i = 0; i < mems.length; ++i) {
             list.addElement(mems[i]);
         }
 

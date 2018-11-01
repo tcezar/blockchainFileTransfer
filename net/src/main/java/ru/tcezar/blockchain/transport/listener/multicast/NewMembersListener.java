@@ -4,7 +4,6 @@ import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.api.UID;
-import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.messages.SimpleMessageData;
@@ -13,9 +12,7 @@ import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static ru.tcezar.blockchain.transport.protocols.NewMembersMessageCommands.HELLO;
@@ -53,7 +50,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
         SimpleMessageData<IMember> data = newMemberMessage.getMessage();
         if (HELLO_ANSWER.equals(data.getCommand())) {
             IMember newMember = data.getData();
-            this.addressBook.add(newMember);
+            this.addressBook.add(newMember.getUID());
             // TODO: 01.11.2018 Сверка цепочек
             if (newChainIsMoreActual(0)) {
                 // TODO: 01.11.2018 Запросить актуальную цепочку

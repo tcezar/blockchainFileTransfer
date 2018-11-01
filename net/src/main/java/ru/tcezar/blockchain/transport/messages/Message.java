@@ -1,6 +1,5 @@
 package ru.tcezar.blockchain.transport.messages;
 
-import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.api.UID;
 
