@@ -60,7 +60,13 @@ public final class Member implements IMember {
             ConfigKeeper.saveConfigsToFile();
         }
         blockChain = new BlockChain();
-        id = new UID(keys.getPublicKey().hashCode(), InetAddress.getLocalHost().getHostAddress());
+        String interfaceIP = System.getProperty("interfaceIP");
+        if (interfaceIP == null) {
+            interfaceIP = InetAddress.getLocalHost().getHostAddress();
+        }
+        id = new UID(keys.getPublicKey().hashCode(),
+                interfaceIP != null ? interfaceIP : "127.0.0.1"
+        );
         listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
