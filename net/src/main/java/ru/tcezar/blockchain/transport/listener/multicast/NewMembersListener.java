@@ -2,7 +2,7 @@ package ru.tcezar.blockchain.transport.listener.multicast;
 
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.transport.api.AbstractMulticastReceiver;
+import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
 
 import java.io.IOException;
