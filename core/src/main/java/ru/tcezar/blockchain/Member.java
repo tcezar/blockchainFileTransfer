@@ -1,6 +1,5 @@
 package ru.tcezar.blockchain;
 
-import io.netty.util.internal.ConcurrentSet;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.UID;
@@ -15,7 +14,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,7 +39,7 @@ public final class Member implements IMember {
     final private ExecutorService singleTasks;
     final private ExecutorService singleFileTransfers;
     final private UID id;
-    final private Set<UID> members;
+    final private Map<UID, Integer> members;
 //    final private ConcurrentHashMap<>
 
     public Member() throws GeneralSecurityException, IOException {
@@ -70,7 +70,7 @@ public final class Member implements IMember {
         listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
-        members = new ConcurrentSet<>();
+        members = new ConcurrentHashMap<>();
     }
 
     public void stopFiletransfer() {
@@ -82,7 +82,7 @@ public final class Member implements IMember {
     }
 
     @Override
-    public Set<UID> getMembers() {
+    public Map<UID, Integer> getMembers() {
         return members;
     }
 

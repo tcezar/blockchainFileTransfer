@@ -26,7 +26,8 @@ public class HelloEverybodyServer implements Runnable {
     public void run() {
         while (true) {
             try {
-                new MulticastPublisher(socketAddr, port).multicast(new Message(null, member.getUID(), "HELLO!", HELLO));
+                new MulticastPublisher(socketAddr, port).multicast(
+                        new Message(null, member.getUID(), HELLO, member.getBlockChain().getSize()));
                 try {
                     Thread.sleep(10000);
                 } catch (InterruptedException e) {
