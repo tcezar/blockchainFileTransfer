@@ -1,19 +1,10 @@
 package ru.tcezar.blockchain.forms;
 
-import ru.tcezar.blockchain.Member;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.UID;
-import ru.tcezar.blockchain.transport.MulticastPublisher;
-import ru.tcezar.blockchain.transport.messages.Message;
-import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
 import ru.tcezar.crypto.api.ICryptoUtils;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Set;
