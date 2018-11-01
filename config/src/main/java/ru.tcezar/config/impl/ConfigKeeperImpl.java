@@ -1,24 +1,24 @@
-package ru.lib.impl;
+package ru.tcezar.config.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.lib.api.ISettingKeeper;
+import ru.tcezar.config.api.IConfigKeeper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class SettingKeeper implements ISettingKeeper {
+public class ConfigKeeperImpl implements IConfigKeeper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SettingKeeper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigKeeperImpl.class);
 
     private Properties properties = new Properties();
 
-    public SettingKeeper() {
+    public ConfigKeeperImpl() {
 
     }
 
-    public SettingKeeper(String filepath) {
+    public ConfigKeeperImpl(String filepath) {
         LOGGER.info("Processing of file by filepath: {}", filepath);
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filepath);
 
@@ -34,12 +34,12 @@ public class SettingKeeper implements ISettingKeeper {
     }
 
     @Override
-    public Object getSetting(String code) {
+    public Object getConfig(String code) {
         return properties.get(code);
     }
 
     @Override
-    public void setSetting(String code, String value) {
+    public void setConfig(String code, String value) {
         if (code != null) {
             LOGGER.info("Set setting in map (code: {}, value: {})", code, value);
             properties.put(code, value);
@@ -47,7 +47,7 @@ public class SettingKeeper implements ISettingKeeper {
     }
 
     @Override
-    public Properties getSettings() {
+    public Properties getAllConfigs() {
         return (Properties) properties.clone();
     }
 
