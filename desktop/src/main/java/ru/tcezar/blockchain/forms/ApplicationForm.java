@@ -59,7 +59,22 @@ public class ApplicationForm extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(mainPanel);
         setTitle("Участник №" + member.getUID());
-        listMembers.setModel(splitMembers());
+
+        Thread threadTransport = new Thread(() -> {
+            while (true) {
+                if(listMembers.getModel().getSize() != this.member.getMembers().size()){
+                    listMembers.setModel(splitMembers());
+                    listMembers.repaint();
+                }
+                try {
+                    Thread.sleep(5000l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        threadTransport.setDaemon(true);
+        threadTransport.start();
 
         ChangeListener changeListener = new ChangeListener() {
             @Override
