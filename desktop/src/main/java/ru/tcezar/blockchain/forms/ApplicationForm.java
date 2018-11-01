@@ -1,18 +1,17 @@
 package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.Member;
+import ru.tcezar.blockchain.api.IBlock;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
-import ru.tcezar.crypto.api.ICryptoUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.Set;
 
 public class ApplicationForm extends JFrame {
@@ -21,6 +20,7 @@ public class ApplicationForm extends JFrame {
     private JPanel mainControl;
     private JTabbedPane tabbedPane1;
     private JList listMembers;
+    private JList listChains;
 
     private SendFileForm sendFileForm = new SendFileForm();
     private Member member;
@@ -32,6 +32,14 @@ public class ApplicationForm extends JFrame {
             result.addElement("Участник №" + uid.toString());
         }
 
+        return result;
+    }
+
+    private DefaultListModel splitChains() {
+        DefaultListModel result = new DefaultListModel();
+        for (IBlock iBlock : member.getBlockChain().getBlockchain()) {
+            result.addElement( iBlock.toString());
+        }
         return result;
     }
 
@@ -84,6 +92,7 @@ public class ApplicationForm extends JFrame {
                         break;
                     case 2:
                         //TODO добавить историю
+                        listChains.setModel(splitChains());
                         break;
                 }
             }
