@@ -2,6 +2,7 @@ package ru.tcezar.blockchain.forms;
 
 import ru.tcezar.blockchain.BlockChain;
 import ru.tcezar.blockchain.Transport;
+import ru.tcezar.blockchain.api.IMember;
 
 import javax.swing.*;
 import java.awt.*;
@@ -124,5 +125,9 @@ public class FileTransferForm extends JFrame {
 
     public static void setBlockChain(BlockChain blockChain) {
         FileTransferForm.blockChain = blockChain;
+    }
+
+    public static void setMember(IMember member) {
+
     }
 }
