@@ -53,19 +53,21 @@ public class BlockChain implements IBlockChain {
     }
 
     @Override
-    public void generateNextBlock(IMessage blockData) {
+    public boolean generateNextBlock(IMessage blockData) {
 
         IBlock lastBlock = getLatestBlock();
-        blockchain.add(
+        return addBlock(
                 new Block(lastBlock.getIndex() + 1, lastBlock.getHash(), blockData)
         );
     }
 
     @Override
-    public void addBlock(IBlock newBlock) {
+    public boolean addBlock(IBlock newBlock) {
         if (isValidNewBlock(newBlock, getLatestBlock())) {
             blockchain.add(newBlock);
+            return true;
         }
+        return false;
     }
 
     @Override

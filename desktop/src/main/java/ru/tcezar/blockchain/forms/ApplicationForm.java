@@ -71,14 +71,23 @@ public class ApplicationForm extends JFrame {
                                             sendFileForm.getFile(),
                                             getCheckedMemebers()));
                                     for (UID uid : getCheckedMemebers()) {
-                                        new MulticastPublisher("230.0.0.0", 2002).multicast(
-                                                new Message(
-                                                        uid,
-                                                        member.getUID(),
-                                                        "SEND FILE",
-                                                        sendFileForm.getFile().getName()
-                                                )
+                                        Message sendFile = new Message(
+                                                uid,
+                                                member.getUID(),
+                                                "SEND FILE",
+                                                sendFileForm.getFile().getName()
                                         );
+                                        if (member.getBlockChain().generateNextBlock(sendFile)) {
+                                            new MulticastPublisher("230.0.0.0", 2002).multicast(
+                                                    new Message(
+                                                            uid,
+                                                            member.getUID(),
+                                                            "NEXT BLOCK",
+                                                            member.getBlockChain().getLatestBlock()
+                                                    )
+                                            );
+                                        }
+
                                     }
                                 } catch (IOException e1) {
                                     e1.printStackTrace();
