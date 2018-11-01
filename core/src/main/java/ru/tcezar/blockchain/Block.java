@@ -1,7 +1,9 @@
 package ru.tcezar.blockchain;
 
 import ru.tcezar.blockchain.api.IBlock;
+import ru.tcezar.blockchain.api.IMessage;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,10 +15,10 @@ public class Block implements IBlock {
     final private long index;
     final private String previousHash;
     final private Date timestamp;
-    final private Object data;
+    final private IMessage data;
     final private String hash;
 
-    public Block(long index, String previousHash, Object data) {
+    public Block(long index, String previousHash, IMessage data) {
         this.index = index;
         this.previousHash = previousHash;
         this.timestamp = new Date();
@@ -36,14 +38,22 @@ public class Block implements IBlock {
         }
     }
 
+    @Override
+    public IMessage getData() {
+        return data;
+    }
+
+    @Override
     public String getHash() {
         return hash;
     }
 
+    @Override
     public long getIndex() {
         return index;
     }
 
+    @Override
     public String getPreviousHash() {
         return previousHash;
     }

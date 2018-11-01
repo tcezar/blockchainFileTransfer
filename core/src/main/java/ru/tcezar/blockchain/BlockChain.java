@@ -1,6 +1,6 @@
 package ru.tcezar.blockchain;
 
-import ru.tcezar.blockchain.api.IBlockChain;
+import ru.tcezar.blockchain.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,30 @@ public class BlockChain implements IBlockChain {
     }
 
     private Block getGenesisBlock() {
-        return new Block(0, "0", "my genesis block!!");
+        return new Block(0, "0", new IMessage() {
+            @Override
+            public IMember getRecipient() {
+                return null;
+            }
+
+            @Override
+            public IMember getSender() {
+                return null;
+            }
+
+            @Override
+            public IMessageData getMessage() {
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "my genesis block!!";
+            }
+        });
     }
 
-    public void generateNextBlock(Object blockData) {
+    public void generateNextBlock(IMessage blockData) {
 
         Block lastBlock = getLatestBlock();
         blockchain.add(

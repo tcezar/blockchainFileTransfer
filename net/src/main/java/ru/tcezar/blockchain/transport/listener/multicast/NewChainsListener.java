@@ -1,10 +1,11 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
+import ru.tcezar.blockchain.api.IBlock;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import ru.tcezar.blockchain.transport.api.IListenerNewChain;
+import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -27,7 +28,7 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
     @Override
     protected boolean processMessage(IMessage message) {
         IMember sender = message.getSender();
-
+        IBlock data = (IBlock) message.getMessage().getPublic();
         return false;
     }
 

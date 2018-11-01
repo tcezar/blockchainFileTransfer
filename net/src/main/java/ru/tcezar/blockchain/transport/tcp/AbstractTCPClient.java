@@ -1,4 +1,4 @@
-package ru.tcezar.blockchain.transport;
+package ru.tcezar.blockchain.transport.tcp;
 
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.api.IMessageData;
