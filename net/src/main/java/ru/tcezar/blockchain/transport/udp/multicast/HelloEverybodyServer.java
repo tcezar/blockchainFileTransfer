@@ -25,6 +25,11 @@ public class HelloEverybodyServer implements Runnable {
         while (true) {
             try {
                 multicastPublisher.multicast(new Message(null, member.getUID(), "HELLO!", HELLO));
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
