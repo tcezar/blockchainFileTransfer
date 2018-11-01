@@ -3,8 +3,10 @@ package ru.tcezar.blockchain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.forms.FileTransferForm;
 
+import java.security.NoSuchAlgorithmException;
+
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         Transport transport = new Transport(5700,5800);
         Thread threadTransport = new Thread(new Runnable() {
             @Override
