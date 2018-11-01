@@ -1,46 +1,76 @@
 package ru.tcezar.blockchain;
 
-import ru.tcezar.blockchain.api.IBlockChain;
+import ru.tcezar.blockchain.api.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockChain implements IBlockChain {
     static final long serialVersionUID = 7187392471159151072L;
-    private List<Block> blockchain;
+    private List<IBlock> blockchain;
 
     public BlockChain() {
         this.blockchain = new ArrayList<>();
         blockchain.add(getGenesisBlock());
     }
 
-    public List<Block> getBlockchain() {
+    @Override
+    public List<IBlock> getBlockchain() {
         return new ArrayList<>(blockchain);
     }
 
-    private Block getGenesisBlock() {
-        return new Block(0, "0", "my genesis block!!");
+    private IBlock getGenesisBlock() {
+        return new Block(0, "0", new IMessage() {
+            @Override
+            public IMember getRecipient() {
+                return null;
+            }
+
+            @Override
+            public IMember getSender() {
+                return null;
+            }
+
+            @Override
+            public Serializable getMessage() {
+                return null;
+            }
+
+            @Override
+            public Serializable getTheme() {
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "my genesis block!!";
+            }
+        });
     }
 
-    public void generateNextBlock(Object blockData) {
+    @Override
+    public void generateNextBlock(IMessage blockData) {
 
-        Block lastBlock = getLatestBlock();
+        IBlock lastBlock = getLatestBlock();
         blockchain.add(
                 new Block(lastBlock.getIndex() + 1, lastBlock.getHash(), blockData)
         );
     }
 
-    public void addBlock(Block newBlock) {
+    @Override
+    public void addBlock(IBlock newBlock) {
         if (isValidNewBlock(newBlock, getLatestBlock())) {
             blockchain.add(newBlock);
         }
     }
 
-    private Block getLatestBlock() {
+    @Override
+    public IBlock getLatestBlock() {
         return blockchain.get(blockchain.size() - 1);
     }
 
-    public static boolean isValidNewBlock(Block newBlock, Block previousBlock) {
+    public static boolean isValidNewBlock(IBlock newBlock, IBlock previousBlock) {
         if (previousBlock.getIndex() + 1 != newBlock.getIndex()) {
             System.out.println("invalid index");
             return false;

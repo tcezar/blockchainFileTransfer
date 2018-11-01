@@ -1,4 +1,4 @@
-package ru.tcezar.blockchain.transport;
+package ru.tcezar.blockchain.transport.tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
