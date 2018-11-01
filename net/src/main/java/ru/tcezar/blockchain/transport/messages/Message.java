@@ -14,6 +14,7 @@ public class Message<T extends Serializable> implements IMessage {
     private IMember recipient;
     private IMember sender;
     private T messageData;
+    private T messageTheme;
 
     private Message(IMember recipient, IMember sender, T data) {
         this.recipient = recipient;
@@ -57,5 +58,10 @@ public class Message<T extends Serializable> implements IMessage {
     @Override
     public T getMessage() {
         return this.messageData;
+    }
+
+    @Override
+    public Serializable getTheme() {
+        return this.messageTheme;
     }
 }

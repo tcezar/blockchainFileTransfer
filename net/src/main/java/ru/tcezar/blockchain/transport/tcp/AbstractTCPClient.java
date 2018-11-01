@@ -1,17 +1,14 @@
 package ru.tcezar.blockchain.transport.tcp;
 
 import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.api.IMessageData;
 import ru.tcezar.blockchain.transport.api.IClient;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class AbstractTCPClient extends AbstractTCP implements IClient {
     final InetAddress address;

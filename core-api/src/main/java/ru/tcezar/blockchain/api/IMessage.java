@@ -7,4 +7,5 @@ public interface IMessage<T extends Serializable> extends Serializable {
     IMember getSender();
 
     T getMessage();
+    T getTheme();
 }
