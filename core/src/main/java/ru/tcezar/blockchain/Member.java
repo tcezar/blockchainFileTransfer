@@ -49,9 +49,9 @@ public final class Member implements IMember {
                     Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.privateKeyCode))));
         } else {
             keys = cryptoUtils.generateKeys();
-            ConfigKeeper.setConfig(ConfigKeeper.publicKeyCode, ConfigKeeper.configDir + File.pathSeparator +
+            ConfigKeeper.setConfig(ConfigKeeper.publicKeyCode, ConfigKeeper.configDir + File.separator +
                     ConfigKeeper.publicKeyCode + keys.getPublicKey().hashCode());
-            ConfigKeeper.setConfig(ConfigKeeper.privateKeyCode, ConfigKeeper.configDir + File.pathSeparator +
+            ConfigKeeper.setConfig(ConfigKeeper.privateKeyCode, ConfigKeeper.configDir + File.separator +
                     ConfigKeeper.privateKeyCode + keys.getPrivateKey().hashCode());
             cryptoUtils.saveKeysToFiles(keys,
                     Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.publicKeyCode))),
