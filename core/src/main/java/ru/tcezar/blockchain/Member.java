@@ -7,7 +7,7 @@ import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +35,7 @@ public final class Member implements IMember {
     final private String id;
     final private List<IMember> members;
 
-    public Member() throws NoSuchAlgorithmException {
+    public Member() throws GeneralSecurityException {
         ICryptoUtils criptoUtils = new CryptoUtils();
         keys = criptoUtils.generateKeys();
         blockChain = new BlockChain();

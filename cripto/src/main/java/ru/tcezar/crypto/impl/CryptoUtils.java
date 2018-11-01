@@ -3,6 +3,7 @@ package ru.tcezar.crypto.impl;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 
+import javax.crypto.NoSuchPaddingException;
 import java.io.*;
 import java.nio.file.Path;
 import java.security.*;
@@ -22,7 +23,7 @@ public class CryptoUtils implements ICryptoUtils {
     }
 
     @Override
-    public IPairKeys generateKeys() {
+    public IPairKeys generateKeys() throws GeneralSecurityException {
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         return new PairKeys(keyPair.getPublic(), keyPair.getPrivate());
     }
@@ -41,7 +42,7 @@ public class CryptoUtils implements ICryptoUtils {
     }
 
     @Override
-    public IPairKeys getKeysFromFiles(Path publicKeyPath, Path privateKeyPath) throws IOException, InvalidKeySpecException {
+    public IPairKeys getKeysFromFiles(Path publicKeyPath, Path privateKeyPath) throws IOException, GeneralSecurityException {
         PublicKey publicKey = getPublicKeyFromFile(publicKeyPath);
         PrivateKey privateKey = getPrivateKeyFromFile(privateKeyPath);
         return new PairKeys(publicKey, privateKey);
