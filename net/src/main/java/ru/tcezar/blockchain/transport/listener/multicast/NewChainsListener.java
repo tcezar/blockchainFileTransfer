@@ -1,9 +1,6 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
-import ru.tcezar.blockchain.api.IBlock;
-import ru.tcezar.blockchain.api.IBlockChain;
-import ru.tcezar.blockchain.api.IMember;
-import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.api.*;
 import ru.tcezar.blockchain.transport.api.IListenerNewChain;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.tcp.AbstractTCPClient;
@@ -47,9 +44,8 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
 
     @Override
     protected void errors(IMessage message) throws UnknownHostException {
-        // TODO отправить сообщение отправителю, что его сообщение не актуально
-        IMember sender = message.getSender();
-        AbstractTCPClient tcpClient = new AbstractTCPClient(message.getSender().getLocalAdress().getHostAddress(), 4055) {
+        UID sender = message.getSender();
+        AbstractTCPClient tcpClient = new AbstractTCPClient(message.getSender().addr, 4055) {
             @Override
             public void run() {
                 try {
@@ -57,8 +53,8 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
                             new Message(
                                     message.getSender(),
                                     message.getRecipient(),
-                                    "my blockChain",
-                                    SerializationUtils.serializeObject(blockChain))
+                                    "my size blockChain",
+                                    SerializationUtils.serializeObject(blockChain.getSize()))
                     );
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();

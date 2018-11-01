@@ -7,7 +7,5 @@ import java.net.InetAddress;
  * участник цепочки (клиента=сервер)
  */
 public interface IMember extends Serializable {
-    String getId();
-
-    InetAddress getLocalAdress();
+    UID getUID();
 }

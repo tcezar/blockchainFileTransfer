@@ -2,6 +2,7 @@ package ru.tcezar.blockchain.transport.messages;
 
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
+import ru.tcezar.blockchain.api.UID;
 
 import java.io.Serializable;
 
@@ -9,12 +10,12 @@ import java.io.Serializable;
  * Created by Michael on 01.11.2018.
  */
 public class Message<T extends Serializable> implements IMessage {
-    private IMember recipient;
-    private IMember sender;
+    private UID recipient;
+    private UID sender;
     private T messageData;
     private String messageTheme;
 
-    public Message(IMember recipient, IMember sender, String messageTheme, T data) {
+    public Message(UID recipient, UID sender, String messageTheme, T data) {
         this.recipient = recipient;
         this.sender = sender;
         this.messageTheme = messageTheme;
@@ -22,12 +23,12 @@ public class Message<T extends Serializable> implements IMessage {
     }
 
     @Override
-    public IMember getRecipient() {
+    public UID getRecipient() {
         return this.recipient;
     }
 
     @Override
-    public IMember getSender() {
+    public UID getSender() {
         return this.sender;
     }
 
@@ -43,7 +44,7 @@ public class Message<T extends Serializable> implements IMessage {
 
     @Override
     public String toString() {
-        String recipient = getRecipient() == null ? "ALL USERS" : getRecipient().getId();
-        return String.format("%s -> %s. %s:%s", getSender().getId(), recipient, getTheme(), getMessage());
+        String recipient = getRecipient() == null ? "ALL USERS" : getRecipient().toString();
+        return String.format("%s -> %s. %s:%s", getSender().toString(), recipient, getTheme(), getMessage());
     }
 }

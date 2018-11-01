@@ -23,12 +23,12 @@ public class BlockChain implements IBlockChain {
     private IBlock getGenesisBlock() {
         return new Block(0, "0", new IMessage() {
             @Override
-            public IMember getRecipient() {
+            public UID getRecipient() {
                 return null;
             }
 
             @Override
-            public IMember getSender() {
+            public UID getSender() {
                 return null;
             }
 

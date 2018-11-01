@@ -1,7 +1,9 @@
 package ru.tcezar.blockchain;
 
+import io.netty.util.internal.ConcurrentSet;
 import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
+import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.api.*;
 import ru.tcezar.config.ConfigKeeper;
 import ru.tcezar.crypto.api.ICryptoUtils;
@@ -13,8 +15,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,13 +38,13 @@ public final class Member implements IMember {
     final private ExecutorService listeners;
     final private ExecutorService singleTasks;
     final private ExecutorService singleFileTransfers;
-    final private String id;
-    final private List<IMember> members;
-    final private InetAddress localAdress;
+    final private UID id;
+    final private Set<UID> members;
+//    final private ConcurrentHashMap<>
 
     public Member() throws GeneralSecurityException, IOException {
         ICryptoUtils cryptoUtils = new CryptoUtils();
-        if(ConfigKeeper.checkKeysFilepathConsist()) {
+        if (ConfigKeeper.checkKeysFilepathConsist()) {
             keys = cryptoUtils.getKeysFromFiles(
                     Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.publicKeyCode))),
                     Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.privateKeyCode))));
@@ -59,12 +60,11 @@ public final class Member implements IMember {
             ConfigKeeper.saveConfigsToFile();
         }
         blockChain = new BlockChain();
-        id = String.valueOf(keys.getPublicKey().hashCode());
+        id = new UID(keys.getPublicKey().hashCode(), InetAddress.getLocalHost().getHostAddress());
         listeners = Executors.newFixedThreadPool(3);
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
-        members = new ArrayList<>();
-        localAdress = InetAddress.getLocalHost();
+        members = new ConcurrentSet<>();
     }
 
     public void stopFiletransfer() {
@@ -75,7 +75,7 @@ public final class Member implements IMember {
         singleFileTransfers.submit(singleFileTransfer);
     }
 
-    public List<IMember> getMembers() {
+    public Set<UID> getMembers() {
         return members;
     }
 
@@ -92,6 +92,7 @@ public final class Member implements IMember {
         listenerNewMembers.setBlockChain(blockChain);
         addListener(listenerNewMembers);
     }
+
     public void addListenerRequestOldMembers(IListenerRequestOldMembers iListenerRequestOldMembers) {
         iListenerRequestOldMembers.setMembers(members);
         iListenerRequestOldMembers.setBlockChain(blockChain);
@@ -108,18 +109,26 @@ public final class Member implements IMember {
     }
 
     @Override
-    public String getId() {
+    public UID getUID() {
         return id;
     }
 
     @Override
     public String toString() {
-        return "id=" + getId() +
-                ", localAdress=" + getLocalAdress();
+        return getUID().toString();
     }
 
     @Override
-    public InetAddress getLocalAdress() {
-        return localAdress;
+    public int hashCode() {
+        return getUID().id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null && IMember.class.isAssignableFrom(obj.getClass())) {
+            return getUID().equals(((IMember) obj).getUID());
+        }
+        return false;
+    }
+
 }
