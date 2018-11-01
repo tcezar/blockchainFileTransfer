@@ -14,7 +14,7 @@ public class Message<T extends Serializable> implements IMessage {
     private T messageData;
     private String messageTheme;
 
-    private Message(IMember recipient, IMember sender, String messageTheme, T data) {
+    public Message(IMember recipient, IMember sender, String messageTheme, T data) {
         this.recipient = recipient;
         this.sender = sender;
         this.messageTheme = messageTheme;

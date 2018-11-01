@@ -1,11 +1,12 @@
 package ru.tcezar.blockchain.api;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * цепочка блоков
  */
-public interface IBlockChain {
+public interface IBlockChain extends Serializable {
     List<IBlock> getBlockchain();
 
     void generateNextBlock(IMessage blockData);

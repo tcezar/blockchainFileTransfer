@@ -7,6 +7,8 @@ import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,9 @@ public final class Member implements IMember {
     final private ExecutorService singleFileTransfers;
     final private String id;
     final private List<IMember> members;
+    final private InetAddress localAdress;
 
-    public Member() throws GeneralSecurityException {
+    public Member() throws GeneralSecurityException, UnknownHostException {
         ICryptoUtils cryptoUtils = new CryptoUtils();
         keys = cryptoUtils.generateKeys();
         blockChain = new BlockChain();
@@ -44,6 +47,7 @@ public final class Member implements IMember {
         singleTasks = Executors.newSingleThreadExecutor();
         singleFileTransfers = Executors.newSingleThreadExecutor();
         members = new ArrayList<>();
+        localAdress = InetAddress.getLocalHost();
     }
 
     public void stopFiletransfer() {
@@ -89,5 +93,16 @@ public final class Member implements IMember {
     @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + getId() +
+                ", localAdress=" + getLocalAdress();
+    }
+
+    @Override
+    public InetAddress getLocalAdress() {
+        return localAdress;
     }
 }
