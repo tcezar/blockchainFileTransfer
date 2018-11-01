@@ -1,13 +1,11 @@
-package ru.tcezar.blockchain.transport;
+package ru.tcezar.blockchain.transport.tcp;
 
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.transport.api.IServer;
+import ru.tcezar.blockchain.transport.tcp.AbstractTCP;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
