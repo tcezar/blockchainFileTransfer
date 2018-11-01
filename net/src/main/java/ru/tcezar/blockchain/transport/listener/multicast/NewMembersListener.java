@@ -1,6 +1,7 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
 import ru.tcezar.blockchain.api.IBlockChain;
+import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.IMessage;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.api.INewMembersListener;
@@ -23,13 +24,16 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
 
     private Set<UID> addressBook = new HashSet<>();
     private IBlockChain blockChain = null;
+    private IMember member;
 
-    protected NewMembersListener(MulticastSocket socket, InetAddress group) throws IOException {
+    protected NewMembersListener(MulticastSocket socket, InetAddress group, IMember member) throws IOException {
         super(socket, group);
+        this.member = member;
     }
 
-    public NewMembersListener(String socketAddr, int socketPort) throws IOException {
+    public NewMembersListener(String socketAddr, int socketPort, IMember member) throws IOException {
         super(socketAddr, socketPort);
+        this.member = member;
     }
 
     @Override
@@ -42,13 +46,19 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
         this.addressBook = members;
     }
 
+    private void addMember(UID uid) {
+        if (!addressBook.contains(uid) && !member.getUID().equals(uid)) {
+            this.addressBook.add(uid);
+        }
+    }
+
     @Override
     protected boolean processMessage(IMessage message) {
 //        System.out.println("получено сообщение:" + message);
         Message<String> newMemberMessage = (Message) message;
         String data = newMemberMessage.getMessage();
         if (HELLO_ANSWER.equals(data)) {
-            this.addressBook.add(newMemberMessage.getSender());
+            addMember(newMemberMessage.getSender());
             // TODO: 01.11.2018 Сверка цепочек
             if (newChainIsMoreActual(0)) {
                 // TODO: 01.11.2018 Запросить актуальную цепочку
@@ -58,7 +68,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
             return true;
         } else if (HELLO.equals(newMemberMessage.getMessage())) {
             System.out.println(String.format("Получен HELLO! %s", newMemberMessage.getSender()));
-            this.addressBook.add(newMemberMessage.getSender());
+            addMember(newMemberMessage.getSender());
             return true;
         }
         return false;
