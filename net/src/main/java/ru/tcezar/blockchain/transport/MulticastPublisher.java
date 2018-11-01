@@ -1,6 +1,7 @@
 package ru.tcezar.blockchain.transport;
 
 import ru.tcezar.blockchain.api.IMessageData;
+import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
