@@ -7,6 +7,7 @@ import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
 import javax.crypto.Cipher;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,8 +18,8 @@ import java.security.KeyPairGenerator;
 
 public class CryptoUtilsTest {
 
-    private static final Path publicKeyPath = Paths.get(System.getProperty("user.dir") + "\\publicKey");
-    private static final Path privateKeyPath = Paths.get(System.getProperty("user.dir") + "\\privateKey");
+    private static final Path publicKeyPath = Paths.get(System.getProperty("user.dir") + File.separator + "publicKey");
+    private static final Path privateKeyPath = Paths.get(System.getProperty("user.dir") + File.separator + "\\privateKey");
     private static final String testMsg = "Hello. It's test message!";
 
     @Test
