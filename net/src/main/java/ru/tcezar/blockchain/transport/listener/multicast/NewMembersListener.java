@@ -58,6 +58,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
             }
             return true;
         } else if (HELLO.equals(data.getCommand())) {
+
             return true;
         }
         return false;
@@ -67,7 +68,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
     private boolean newChainIsMoreActual(Integer size) {
         return false;
     }
-    
+
     @Override
     protected boolean isStoping(IMessage recivedMessage) {
         return false;

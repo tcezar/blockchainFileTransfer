@@ -32,7 +32,7 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
     @Override
     protected boolean processMessage(IMessage message) {
         IBlock data = (IBlock) message.getMessage();
-        if (blockChain.getLatestBlock().getHash() == data.getPreviousHash()
+        if (blockChain.getLatestBlock().getHash().equals(data.getPreviousHash())
                 && blockChain.getLatestBlock().getIndex() + 1 == data.getIndex()) {
             blockChain.addBlock(data);
             return true;
