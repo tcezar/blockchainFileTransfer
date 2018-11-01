@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractTCPClient implements IClient {
+public abstract class AbstractTCPClient extends AbstractTCP implements IClient {
     final InetAddress address;
     final int port;
     final int size = 1024 * 1024;
@@ -44,8 +44,8 @@ public abstract class AbstractTCPClient implements IClient {
             System.out.println("sentence: " + message);
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
             outToServer.writeBytes(SerializationUtils.serializeObject(message) + "\n");
-            // читаем ответ //TODO 9 java
-            byte[] bytes = clientSocket.getInputStream().readAllBytes();
+            // читаем ответ
+            byte[] bytes = readAllBytesFromInputStream(clientSocket.getInputStream());
             modifiedSentence = SerializationUtils.getData(bytes);
             System.out.println("FROM SERVER: " + modifiedSentence);
             clientSocket.close();

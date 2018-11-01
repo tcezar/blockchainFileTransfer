@@ -42,4 +42,14 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
     protected boolean processMessage(IMessage messageData) {
         return false;
     }
+
+    @Override
+    protected boolean isStoping(IMessage recivedMessage) {
+        return false;
+    }
+
+    @Override
+    protected void errors(IMessage recivedMessage) {
+
+    }
 }

@@ -32,7 +32,7 @@ public class Transport {
             }
         }
         if (server == null) {
-            throw new RuntimeException("AbstractTcpServer not init");
+            throw new RuntimeException("AbstractTCPServer not init");
         }
     }
 

@@ -13,27 +13,27 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public abstract class AbstractTcpServer implements IServer {
+public abstract class AbstractTCPServer extends AbstractTCP implements IServer {
     private final int port;
     private final InetAddress address;
     private boolean running;
     ServerSocket serverSocket;
 
-    public AbstractTcpServer(String addr, int port) throws UnknownHostException {
+    public AbstractTCPServer(String addr, int port) throws UnknownHostException {
         this.address = InetAddress.getByName(addr);
         this.port = port;
 
     }
 
-    public AbstractTcpServer(int port) throws UnknownHostException {
+    public AbstractTCPServer(int port) throws UnknownHostException {
         this.address = null;
         this.port = port;
 
     }
 
 //    public static void main(String argv[]) throws Exception {
-//        AbstractTcpServer server = new AbstractTcpServer("localhost", 6789);
-//        AbstractTcpServer server = new AbstractTcpServer(6789);
+//        AbstractTCPServer server = new AbstractTCPServer("localhost", 6789);
+//        AbstractTCPServer server = new AbstractTCPServer(6789);
 //        server.run();
 //    }
 
@@ -51,7 +51,7 @@ public abstract class AbstractTcpServer implements IServer {
             while (running) {
                 try {
                     Socket connectionSocket = serverSocket.accept();
-                    byte[] bytes = connectionSocket.getInputStream().readAllBytes();
+                    byte[] bytes = readAllBytesFromInputStream(connectionSocket.getInputStream());
                     clientSentence = SerializationUtils.getData(bytes);
 //                    BufferedReader inFromClient =
 //                            new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
