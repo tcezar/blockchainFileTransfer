@@ -8,5 +8,6 @@ public interface IMessage<T extends Serializable> extends Serializable {
     UID getSender();
 
     T getMessage();
-    T getTheme();
+
+    String getTheme();
 }

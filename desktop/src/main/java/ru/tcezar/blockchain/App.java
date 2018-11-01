@@ -11,22 +11,8 @@ import java.security.GeneralSecurityException;
 public class App {
     public static void main(String[] args) throws GeneralSecurityException, IOException {
 
-        /*Transport transport = new Transport(5700,5800);
-        Thread threadTransport = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                transport.startServer();
-            }
-        });
-        threadTransport.setDaemon(true);
-        threadTransport.start();
-        FileTransferForm.setTransport(transport);
-        BlockChain blockChain = new BlockChain();*/
         Member member = new Member();
-        /*FileTransferForm.setBlockChain(blockChain);
-        FileTransferForm.setMember(member);
-        FileTransferForm.run();*/
-        member.addListenerNewMembers(new NewMembersListener("230.0.0.0", 2001));
+        member.addListenerNewMembers(new NewMembersListener("230.0.0.0", 2001, member));
         member.addListenerNewChain(new NewChainsListener("230.0.0.0",2002));
 //        member.addListenerRequestOldMembers(new n("230.0.0.0",20002));
         HelloEverybodyServer helloEverybodyServer = new HelloEverybodyServer(
@@ -34,7 +20,6 @@ public class App {
         Thread thread = new Thread(helloEverybodyServer);
         thread.setDaemon(true);
         thread.start();
-//        FileTransferForm.run();
 
         ApplicationForm applicationForm = new ApplicationForm(member);
         applicationForm.setVisible(true);

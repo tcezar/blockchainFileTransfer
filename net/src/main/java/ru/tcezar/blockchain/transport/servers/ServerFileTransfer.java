@@ -46,7 +46,8 @@ public class ServerFileTransfer extends AbstractTCPServer implements IServerFile
     protected IMessage processMessage(IMessage message) {
         if (members.contains(message.getSender())
                 && member.equals(message.getRecipient())
-                && "GET FILE".equals(message.getTheme())) {
+                && "GET FILE".equals(message.getTheme())
+                && file.getName().equals(message.getMessage())) {
             try {
                 return new Message(
                         message.getSender(),
