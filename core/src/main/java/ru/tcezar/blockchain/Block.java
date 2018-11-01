@@ -9,6 +9,7 @@ import java.util.Base64;
 import java.util.Date;
 
 public class Block implements IBlock {
+    static final long serialVersionUID = 7187392471159151072L;
     final private long index;
     final private String previousHash;
     final private Date timestamp;
