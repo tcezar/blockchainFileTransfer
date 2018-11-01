@@ -6,12 +6,16 @@ import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
+import ru.tcezar.crypto.api.ICryptoUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class ApplicationForm extends JFrame {
@@ -25,7 +29,11 @@ public class ApplicationForm extends JFrame {
     private SendFileForm sendFileForm = new SendFileForm();
     private Member member;
 
+    private Map<String, UID> dataStorage = new HashMap<>();
+
     private DefaultListModel splitMembers() {
+        dataStorage.clear();
+
         DefaultListModel result = new DefaultListModel();
 
         for (UID uid : member.getMembers()) {
