@@ -48,6 +48,10 @@ public final class Member implements IMember {
         return members;
     }
 
+    public IBlockChain getBlockChain() {
+        return blockChain;
+    }
+
     private void addListener(IListener listener) {
         listeners.submit(listener);
     }
