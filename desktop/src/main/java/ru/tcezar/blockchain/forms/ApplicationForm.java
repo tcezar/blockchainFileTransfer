@@ -56,6 +56,7 @@ public class ApplicationForm extends JFrame {
     }
 
     public ApplicationForm(Member member) throws GeneralSecurityException {
+        super();
         this.member = member;
 
         //Свойства формы по-умолчанию
