@@ -7,7 +7,7 @@ abstract class AbstractTCP {
 
     protected byte[] readAllBytesFromInputStream(InputStream inputStream) throws IOException {
         byte[] resultBuff = new byte[0];
-        byte[] buff = new byte[1024];
+        byte[] buff = new byte[1024*1024];
         int k = -1;
         while((k = inputStream.read(buff, 0, buff.length)) > -1) {
             byte[] tbuff = new byte[resultBuff.length + k]; // temp buffer size = bytes already read + bytes last read

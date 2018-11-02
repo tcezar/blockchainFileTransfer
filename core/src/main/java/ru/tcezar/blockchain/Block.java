@@ -31,7 +31,10 @@ public class Block implements IBlock {
     }
 
     public static String calculateHash(IBlock block) {
-        String text = String.valueOf(block.getIndex()) + String.valueOf(block.getPreviousHash()) + String.valueOf(block.getTimestamp()) + String.valueOf(block.getData());
+        String text = String.valueOf(block.getIndex()) +
+                String.valueOf(block.getPreviousHash()) +
+                (block.getIndex() != 0 ? String.valueOf(block.getTimestamp()) : "") +
+                String.valueOf(block.getData());
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(text.getBytes(StandardCharsets.UTF_8));

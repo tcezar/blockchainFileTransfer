@@ -1,9 +1,7 @@
 package ru.tcezar.blockchain.transport.listener.multicast;
 
-import ru.tcezar.blockchain.api.IBlock;
-import ru.tcezar.blockchain.api.IBlockChain;
-import ru.tcezar.blockchain.api.IMessage;
-import ru.tcezar.blockchain.api.UID;
+import ru.tcezar.blockchain.api.*;
+import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.api.IListenerNewChain;
 import ru.tcezar.blockchain.transport.listener.tcp.TransferFileClient;
 import ru.tcezar.blockchain.transport.messages.Message;
@@ -21,23 +19,30 @@ import java.net.UnknownHostException;
  */
 public class NewChainsListener extends AbstractMulticastReceiver implements IListenerNewChain {
     IBlockChain blockChain;
+    private IMember member;
 
-    protected NewChainsListener(MulticastSocket socket, InetAddress group) throws IOException {
+    protected NewChainsListener(MulticastSocket socket, InetAddress group, IMember member) throws IOException {
         super(socket, group);
+        this.member = member;
     }
 
-    public NewChainsListener(String socketAddr, int socketPort) throws IOException {
+    public NewChainsListener(String socketAddr, int socketPort, IMember member) throws IOException {
         super(socketAddr, socketPort);
+        this.member = member;
     }
 
     @Override
     protected boolean processMessage(IMessage message) {
-        System.out.println("Получен " + message);
-        IBlock data = (IBlock) message.getMessage();
-        if (blockChain.getLatestBlock().getHash().equals(data.getPreviousHash())
-                && blockChain.getLatestBlock().getIndex() + 1 == data.getIndex()) {
-            blockChain.addBlock(data);
-            if ("NEXT BLOCK".equals(message.getTheme())) {
+//        System.out.println("Получен " + message);
+        if ("NEXT BLOCK".equals(message.getTheme())) {
+            IBlock data = (IBlock) message.getMessage();
+            if (!message.getSender().equals(member.getUID())
+                    && (blockChain.getSize() == 1 ||
+                    (blockChain.getLatestBlock().getHash().equals(data.getPreviousHash())
+                            && blockChain.getLatestBlock().getIndex() + 1 == data.getIndex()
+                    )
+            )) {
+                blockChain.addBlock(data);
                 IMessage<String> innerMessage = data.getData();
                 if ("SEND FILE".equals(innerMessage.getTheme())) {
                     String fileName = innerMessage.getMessage();
@@ -45,13 +50,34 @@ public class NewChainsListener extends AbstractMulticastReceiver implements ILis
                         TransferFileClient transferFileClient = new TransferFileClient(
                                 message.getSender().addr, 4455,
                                 message.getSender(), message.getRecipient(), fileName);
-                        transferFileClient.run();
+//                        transferFileClient.run();
+                        Message sendFile = new Message(
+                                message.getSender(),
+                                member.getUID(),
+                                "ACCEPT GET FILE",
+                                fileName
+                        );
+                        if (member.getBlockChain().generateNextBlock(sendFile)) {
+                            try {
+                                new MulticastPublisher("230.0.0.0", 2002).multicast(
+                                        new Message(
+                                                message.getSender(),
+                                                member.getUID(),
+                                                "NEXT BLOCK",
+                                                member.getBlockChain().getLatestBlock()
+                                        )
+                                );
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        return true;
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
                 }
             }
-            return true;
+            return false;
         }
         return false;
     }

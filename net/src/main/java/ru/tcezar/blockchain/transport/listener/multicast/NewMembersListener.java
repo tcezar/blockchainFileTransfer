@@ -57,7 +57,7 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
         Message<Integer> newMemberMessage = (Message) message;
         Integer chainSize = newMemberMessage.getMessage();
         if (HELLO.equals(newMemberMessage.getTheme())) {
-            System.out.println(String.format("Получен HELLO! %s", newMemberMessage.getSender()));
+//            System.out.println(String.format("Получен HELLO! %s", newMemberMessage.getSender()));
             addMember(newMemberMessage.getSender(), chainSize);
             return true;
         }
