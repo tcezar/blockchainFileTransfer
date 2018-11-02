@@ -5,13 +5,13 @@ import ru.tcezar.blockchain.api.IBlockChain;
 import ru.tcezar.blockchain.api.IMember;
 import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.api.*;
+import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 import ru.tcezar.config.ConfigKeeper;
 import ru.tcezar.crypto.api.ICryptoUtils;
 import ru.tcezar.crypto.api.IPairKeys;
 import ru.tcezar.crypto.impl.CryptoUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
@@ -31,7 +31,7 @@ public final class Member implements IMember {
     /**
      * цепочка
      */
-    final private IBlockChain blockChain;
+    private IBlockChain blockChain;
     /**
      * постоянные слушатели
      */
@@ -59,7 +59,18 @@ public final class Member implements IMember {
                     Paths.get(String.valueOf(ConfigKeeper.getConfig(ConfigKeeper.privateKeyCode))));
             ConfigKeeper.saveConfigsToFile();
         }
-        blockChain = new BlockChain();
+        try {
+            File file = new File(ConfigKeeper.blockchainFilepath);
+            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file));
+            byte[] keyBytes = new byte[(int) file.length()];
+            dataInputStream.readFully(keyBytes);
+            dataInputStream.close();
+            blockChain = SerializationUtils.getData(keyBytes);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            blockChain = new BlockChain();
+        }
+
         String interfaceIP = System.getProperty("interfaceIP");
         if (interfaceIP == null) {
             interfaceIP = InetAddress.getLocalHost().getHostAddress();
