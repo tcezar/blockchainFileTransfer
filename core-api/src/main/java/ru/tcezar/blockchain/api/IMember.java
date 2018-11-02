@@ -1,13 +1,13 @@
 package ru.tcezar.blockchain.api;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * участник цепочки (клиента=сервер)
  */
 public interface IMember extends Serializable {
-    Set<UID> getMembers();
+    Map<UID, Integer> getMembers();
 
     IBlockChain getBlockChain();
 

@@ -8,7 +8,6 @@ import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
 import ru.tcezar.blockchain.transport.utils.SerializationUtils;
 import ru.tcezar.config.ConfigKeeper;
-import ru.tcezar.crypto.api.ICryptoUtils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -19,7 +18,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -42,7 +40,7 @@ public class ApplicationForm extends JFrame {
 
         DefaultListModel result = new DefaultListModel();
 
-        for (UID uid : member.getMembers()) {
+        for (UID uid : member.getMembers().keySet()) {
             result.addElement("Участник №" + uid.toString());
         }
 
@@ -147,9 +145,7 @@ public class ApplicationForm extends JFrame {
     }
 
     private Set<UID> getCheckedMemebers() {
-        return member.getMembers();
+        return member.getMembers().keySet();
     }
-
-
 
 }

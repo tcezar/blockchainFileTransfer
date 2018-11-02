@@ -11,18 +11,17 @@ import ru.tcezar.blockchain.transport.udp.multicast.AbstractMulticastReceiver;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static ru.tcezar.blockchain.transport.protocols.NewMembersMessageCommands.HELLO;
-import static ru.tcezar.blockchain.transport.protocols.NewMembersMessageCommands.HELLO_ANSWER;
 
 /**
  * Created by Michael on 01.11.2018.
  */
 public class NewMembersListener extends AbstractMulticastReceiver implements INewMembersListener {
 
-    private Set<UID> addressBook = new HashSet<>();
+    private Map<UID, Integer> addressBook = new ConcurrentHashMap<>();
     private IBlockChain blockChain = null;
     private IMember member;
 
@@ -42,33 +41,24 @@ public class NewMembersListener extends AbstractMulticastReceiver implements INe
     }
 
     @Override
-    public void setMembers(Set<UID> members) {
+    public void setMembers(Map<UID, Integer> members) {
         this.addressBook = members;
     }
 
-    private void addMember(UID uid) {
-        if (!addressBook.contains(uid) && !member.getUID().equals(uid)) {
-            this.addressBook.add(uid);
+    private void addMember(UID uid, Integer chainSize) {
+        if (!addressBook.containsKey(uid) && !member.getUID().equals(uid)) {
+            this.addressBook.put(uid, chainSize);
         }
     }
 
     @Override
     protected boolean processMessage(IMessage message) {
 //        System.out.println("получено сообщение:" + message);
-        Message<String> newMemberMessage = (Message) message;
-        String data = newMemberMessage.getMessage();
-        if (HELLO_ANSWER.equals(data)) {
-            addMember(newMemberMessage.getSender());
-            // TODO: 01.11.2018 Сверка цепочек
-            if (newChainIsMoreActual(0)) {
-                // TODO: 01.11.2018 Запросить актуальную цепочку
-            } else {
-                // TODO: 01.11.2018 Отправить свои данные
-            }
-            return true;
-        } else if (HELLO.equals(newMemberMessage.getMessage())) {
+        Message<Integer> newMemberMessage = (Message) message;
+        Integer chainSize = newMemberMessage.getMessage();
+        if (HELLO.equals(newMemberMessage.getTheme())) {
             System.out.println(String.format("Получен HELLO! %s", newMemberMessage.getSender()));
-            addMember(newMemberMessage.getSender());
+            addMember(newMemberMessage.getSender(), chainSize);
             return true;
         }
         return false;
