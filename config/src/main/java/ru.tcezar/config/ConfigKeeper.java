@@ -12,6 +12,7 @@ public class ConfigKeeper {
 
     public static final String publicKeyCode = "publicKey";
     public static final String privateKeyCode = "privateKey";
+    public static final String blockchainFilepath = configDir + File.separator + "blockchain.data";
 
     static {
         System.out.println("Processing of file by filepath: " + propertyFilepath);

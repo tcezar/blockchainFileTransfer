@@ -6,11 +6,17 @@ import ru.tcezar.blockchain.api.UID;
 import ru.tcezar.blockchain.transport.MulticastPublisher;
 import ru.tcezar.blockchain.transport.messages.Message;
 import ru.tcezar.blockchain.transport.servers.ServerFileTransfer;
+import ru.tcezar.blockchain.transport.utils.SerializationUtils;
+import ru.tcezar.config.ConfigKeeper;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,6 +127,21 @@ public class ApplicationForm extends JFrame {
             }
         };
         tabbedPane1.addChangeListener(changeListener);
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                try {
+                    OutputStream outputStream = new FileOutputStream(ConfigKeeper.blockchainFilepath);
+                    outputStream.write(SerializationUtils.serializeObject(member.getBlockChain()));
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("Завершаемся!");
+                System.exit(0);
+            }
+        });
     }
 
     private Set<UID> getCheckedMemebers() {

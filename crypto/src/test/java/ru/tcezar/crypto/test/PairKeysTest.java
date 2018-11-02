@@ -3,6 +3,7 @@ package ru.tcezar.crypto.test;
 import org.junit.Assert;
 import org.junit.Test;
 import ru.tcezar.crypto.api.IPairKeys;
+import ru.tcezar.crypto.impl.CryptoHelper;
 import ru.tcezar.crypto.impl.PairKeys;
 
 import java.security.GeneralSecurityException;
@@ -23,10 +24,11 @@ public class PairKeysTest {
         Assert.assertNotNull(pairKeys.getPublicKey());
         Assert.assertNotNull(pairKeys.getPrivateKey());
 
+        CryptoHelper cryptoHelper = new CryptoHelper(pairKeys);
         System.out.println("Start message: " + testMsg);
-        byte[] encryptBytes = pairKeys.encrypt(testMsg.getBytes());
+        byte[] encryptBytes = cryptoHelper.encrypt(testMsg.getBytes());
         System.out.println("EnCrypt message: " + new String(encryptBytes));
-        byte[] decryptBytes = pairKeys.decrypt(encryptBytes);
+        byte[] decryptBytes = cryptoHelper.decrypt(encryptBytes);
         String newTestMsg = new String(decryptBytes);
         System.out.println("DeCrypt message: " + newTestMsg);
         Assert.assertEquals(testMsg, newTestMsg);
